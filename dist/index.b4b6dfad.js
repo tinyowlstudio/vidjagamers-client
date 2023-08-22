@@ -2943,44 +2943,36 @@ $parcel$ReactRefreshHelpers$98a3.prelude(module);
 try {
 var _jsxDevRuntime = require("react/jsx-dev-runtime");
 var _client = require("react-dom/client");
+var _mainView = require("./components/main-view/main-view");
 // Import statement to indicate that you need to bundle `./index.scss`
 var _indexScss = require("./index.scss");
 // Main component (will eventually use all the others)
-const MyFlixApplication = ()=>{
-    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-        className: "my-flix",
-        children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-            children: "Good morning"
-        }, void 0, false, {
-            fileName: "src/index.jsx",
-            lineNumber: 10,
-            columnNumber: 7
-        }, undefined)
-    }, void 0, false, {
+const VidjaGamersxApplication = ()=>{
+    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _mainView.MainView), {}, void 0, false, {
         fileName: "src/index.jsx",
-        lineNumber: 9,
-        columnNumber: 5
-    }, undefined);
+        lineNumber: 10,
+        columnNumber: 10
+    }, undefined); //short for <MainView></MainView> in jsx since there are no nested elements
 };
-_c = MyFlixApplication;
+_c = VidjaGamersxApplication;
 // Finds the root of your app
 const container = document.querySelector("#root");
 const root = (0, _client.createRoot)(container);
 // Tells React to render your app in the root DOM element
-root.render(/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(MyFlixApplication, {}, void 0, false, {
+root.render(/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(VidjaGamersxApplication, {}, void 0, false, {
     fileName: "src/index.jsx",
-    lineNumber: 20,
+    lineNumber: 18,
     columnNumber: 13
 }, undefined));
 var _c;
-$RefreshReg$(_c, "MyFlixApplication");
+$RefreshReg$(_c, "VidjaGamersxApplication");
 
   $parcel$ReactRefreshHelpers$98a3.postlude(module);
 } finally {
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","react-dom/client":"lOjBx","./index.scss":"lJZlQ","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"l3Ybb"}],"iTorj":[function(require,module,exports) {
+},{"react/jsx-dev-runtime":"iTorj","react-dom/client":"lOjBx","./index.scss":"lJZlQ","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"l3Ybb","./components/main-view/main-view":"4gflv"}],"iTorj":[function(require,module,exports) {
 "use strict";
 module.exports = require("ee51401569654d91");
 
@@ -27303,6 +27295,309 @@ function registerExportsForReactRefresh(module1) {
     }
 }
 
-},{"ec1eeab9db937dd6":"a0K6q"}]},["55Yf8","6unuB","d8Dch"], "d8Dch", "parcelRequire2e06")
+},{"ec1eeab9db937dd6":"a0K6q"}],"4gflv":[function(require,module,exports) {
+var $parcel$ReactRefreshHelpers$f7a6 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+$parcel$ReactRefreshHelpers$f7a6.prelude(module);
+
+try {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "MainView", ()=>MainView);
+var _jsxDevRuntime = require("react/jsx-dev-runtime");
+var _react = require("react");
+var _gameCard = require("../game-card/game-card");
+var _gameView = require("../game-view/game-view");
+var _s = $RefreshSig$();
+const MainView = ()=>{
+    _s();
+    //const [books, setBooks] = useState([]);
+    // Same code as above, above is a shortform
+    // let books = [];
+    // const setBooks = function(newBookList){
+    //   books = newBooksList;
+    // };
+    const [games, setGames] = (0, _react.useState)([
+        {
+            id: 1,
+            title: "God of War Ragnarok",
+            image: "https://m.media-amazon.com/images/I/81Pagnfx1DL._AC_UF1000,1000_QL80_.jpg",
+            developer: "Santa Monica Studio",
+            genres: [
+                "Action-Adventure",
+                "Hack and Slash"
+            ],
+            platforms: [
+                "PS4",
+                "PS5"
+            ],
+            releaseYear: 2022
+        },
+        {
+            id: 2,
+            title: "Guild Wars 2",
+            image: "https://upload.wikimedia.org/wikipedia/en/9/96/Gw2-boxfront.png",
+            developer: "ArenaNet",
+            genres: [
+                "MMORPG"
+            ],
+            platforms: [
+                "PC"
+            ],
+            ReleaseYear: 2010
+        },
+        {
+            id: 3,
+            title: "Undertale",
+            image: "https://m.media-amazon.com/images/I/41Dw1jNoVoL.jpg",
+            developer: "Toby Fox",
+            genres: [
+                "Role-playing"
+            ],
+            platforms: [
+                "PS4",
+                "PS Vita",
+                "Nintendo Switch",
+                "Xbox One",
+                "OS X",
+                "PC",
+                "Linux"
+            ],
+            releaseYear: 2015
+        }
+    ]);
+    const [selectedGame, setSelectedGame] = (0, _react.useState)(null);
+    if (selectedGame) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _gameView.GameView), {
+        game: selectedGame,
+        onBackClick: ()=>setSelectedGame(null)
+    }, void 0, false, {
+        fileName: "src/components/main-view/main-view.jsx",
+        lineNumber: 26,
+        columnNumber: 7
+    }, undefined);
+    //if the UI state is empty
+    if (games.length === 0) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+        children: "The list is empty!"
+    }, void 0, false, {
+        fileName: "src/components/main-view/main-view.jsx",
+        lineNumber: 32,
+        columnNumber: 12
+    }, undefined);
+    return(//everything in the component must be wrapped in a single div
+    //you cant return two different elements next to each other
+    // <div>
+    //   {games.map((game) => (
+    //     //return <div key={game.id}>{game.title}</div>//need key to distinguish similar elements for DOM manipulation with React
+    //     <GameCard key={game.id} game={game}/> //pass the book object from the map function to GameCard, could also be gameData={game}
+    //   ))}
+    // </div>
+    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+        children: games.map((game)=>/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _gameCard.GameCard), {
+                game: game,
+                onGameClick: (newSelectedGame)=>{
+                    setSelectedGame(newSelectedGame); //passes the setSelectedGame to game-card
+                }
+            }, game.id, false, {
+                fileName: "src/components/main-view/main-view.jsx",
+                lineNumber: 46,
+                columnNumber: 9
+            }, undefined))
+    }, void 0, false, {
+        fileName: "src/components/main-view/main-view.jsx",
+        lineNumber: 44,
+        columnNumber: 5
+    }, undefined));
+};
+_s(MainView, "0tIZFbT2hZbIAV+Kn9ynnIM8LIk=");
+_c = MainView;
+var _c;
+$RefreshReg$(_c, "MainView");
+
+  $parcel$ReactRefreshHelpers$f7a6.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+},{"react/jsx-dev-runtime":"iTorj","@parcel/transformer-js/src/esmodule-helpers.js":"bmsdU","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"l3Ybb","react":"21dqq","../game-card/game-card":"3p24S","../game-view/game-view":"foMLl"}],"bmsdU":[function(require,module,exports) {
+exports.interopDefault = function(a) {
+    return a && a.__esModule ? a : {
+        default: a
+    };
+};
+exports.defineInteropFlag = function(a) {
+    Object.defineProperty(a, "__esModule", {
+        value: true
+    });
+};
+exports.exportAll = function(source, dest) {
+    Object.keys(source).forEach(function(key) {
+        if (key === "default" || key === "__esModule" || dest.hasOwnProperty(key)) return;
+        Object.defineProperty(dest, key, {
+            enumerable: true,
+            get: function() {
+                return source[key];
+            }
+        });
+    });
+    return dest;
+};
+exports.export = function(dest, destName, get) {
+    Object.defineProperty(dest, destName, {
+        enumerable: true,
+        get: get
+    });
+};
+
+},{}],"3p24S":[function(require,module,exports) {
+var $parcel$ReactRefreshHelpers$7cf9 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+$parcel$ReactRefreshHelpers$7cf9.prelude(module);
+
+try {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "GameCard", ()=>GameCard);
+var _jsxDevRuntime = require("react/jsx-dev-runtime");
+const GameCard = ({ game, onGameClick })=>{
+    //   return <div>some title</div>;
+    //return <div>{game.title}</div>;
+    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+        onClick: ()=>{
+            onGameClick(game);
+        },
+        children: game.title
+    }, void 0, false, {
+        fileName: "src/components/game-card/game-card.jsx",
+        lineNumber: 5,
+        columnNumber: 5
+    }, undefined);
+};
+_c = GameCard;
+var _c;
+$RefreshReg$(_c, "GameCard");
+
+  $parcel$ReactRefreshHelpers$7cf9.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+},{"react/jsx-dev-runtime":"iTorj","@parcel/transformer-js/src/esmodule-helpers.js":"bmsdU","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"l3Ybb"}],"foMLl":[function(require,module,exports) {
+var $parcel$ReactRefreshHelpers$f5f9 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+$parcel$ReactRefreshHelpers$f5f9.prelude(module);
+
+try {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "GameView", ()=>GameView);
+var _jsxDevRuntime = require("react/jsx-dev-runtime");
+const GameView = ({ game, onBackClick })=>{
+    let genreList = "";
+    let platformList = "";
+    game.genres.forEach((genre, index)=>{
+        //check if it's not the last in the list for the comma
+        if (index !== game.genres.length - 1) genreList += genre + ", ";
+        else genreList += genre; // if its the last, no comma
+    });
+    game.platforms.forEach((platform, index)=>{
+        //check if it's not the last in the list for the comma
+        if (index !== game.platforms.length - 1) platformList += platform + ", ";
+        else platformList += platform; // if its the last, no comma
+    });
+    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+        class: "game-container",
+        children: [
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                class: "game-image",
+                children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("img", {
+                    src: game.image
+                }, void 0, false, {
+                    fileName: "src/components/game-view/game-view.jsx",
+                    lineNumber: 26,
+                    columnNumber: 9
+                }, undefined)
+            }, void 0, false, {
+                fileName: "src/components/game-view/game-view.jsx",
+                lineNumber: 25,
+                columnNumber: 7
+            }, undefined),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                children: [
+                    "Title: ",
+                    game.title
+                ]
+            }, void 0, true, {
+                fileName: "src/components/game-view/game-view.jsx",
+                lineNumber: 28,
+                columnNumber: 7
+            }, undefined),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                children: [
+                    "Developer: ",
+                    game.developer
+                ]
+            }, void 0, true, {
+                fileName: "src/components/game-view/game-view.jsx",
+                lineNumber: 29,
+                columnNumber: 7
+            }, undefined),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                children: [
+                    "Genre: ",
+                    genreList
+                ]
+            }, void 0, true, {
+                fileName: "src/components/game-view/game-view.jsx",
+                lineNumber: 30,
+                columnNumber: 7
+            }, undefined),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                children: [
+                    "Platforms: ",
+                    platformList
+                ]
+            }, void 0, true, {
+                fileName: "src/components/game-view/game-view.jsx",
+                lineNumber: 31,
+                columnNumber: 7
+            }, undefined),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                children: [
+                    "Release Year: ",
+                    game.releaseYear
+                ]
+            }, void 0, true, {
+                fileName: "src/components/game-view/game-view.jsx",
+                lineNumber: 32,
+                columnNumber: 7
+            }, undefined),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
+                onClick: onBackClick,
+                children: "Back"
+            }, void 0, false, {
+                fileName: "src/components/game-view/game-view.jsx",
+                lineNumber: 34,
+                columnNumber: 7
+            }, undefined)
+        ]
+    }, void 0, true, {
+        fileName: "src/components/game-view/game-view.jsx",
+        lineNumber: 24,
+        columnNumber: 5
+    }, undefined);
+};
+_c = GameView;
+var _c;
+$RefreshReg$(_c, "GameView");
+
+  $parcel$ReactRefreshHelpers$f5f9.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+},{"react/jsx-dev-runtime":"iTorj","@parcel/transformer-js/src/esmodule-helpers.js":"bmsdU","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"l3Ybb"}]},["55Yf8","6unuB","d8Dch"], "d8Dch", "parcelRequire2e06")
 
 //# sourceMappingURL=index.b4b6dfad.js.map
