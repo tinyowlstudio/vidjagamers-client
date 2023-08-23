@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { GameCard } from "../game-card/game-card";
 import { GameView } from "../game-view/game-view";
 
@@ -13,13 +13,34 @@ export const MainView = () => {
     // };
 
 
-  const [games, setGames] = useState([
-    { id: 1, title: "God of War Ragnarok", image: "https://m.media-amazon.com/images/I/81Pagnfx1DL._AC_UF1000,1000_QL80_.jpg", developer: "Santa Monica Studio", genres: ["Action-Adventure","Hack and Slash"], platforms: ["PS4","PS5"], releaseYear: 2022},
-    { id: 2, title: "Guild Wars 2", image: "https://upload.wikimedia.org/wikipedia/en/9/96/Gw2-boxfront.png", developer: "ArenaNet", genres: ["MMORPG"], platforms: ["PC"], releaseYear: 2010 },
-    { id: 3, title: "Undertale", image: "https://m.media-amazon.com/images/I/41Dw1jNoVoL.jpg", developer: "Toby Fox", genres: ["Role-playing"], platforms: ["PS4","PS Vita","Nintendo Switch","Xbox One","OS X","PC", "Linux"], releaseYear: 2015 },
-  ]);
+  const [games, setGames] = useState([]);
 
   const [selectedGame, setSelectedGame] = useState(null);
+
+  useEffect(() => {
+    fetch("https://vidjagamers-779c791eee4b.herokuapp.com/games")
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("games from api:", data);
+        const gamesFromApi = data.map((doc) => {
+          return {
+            id: doc._id,
+            title: doc.title,
+            image: doc.image,
+            description: doc.description,
+            platforms: doc.platform,
+            releaseYear: doc.releaseYear,
+            developer: doc.developer,
+            genres: doc.genre,
+            series: doc.series,
+            featured: doc.featured,
+          };
+        });
+        console.log("games in array:", gamesFromApi);
+        setGames(gamesFromApi);
+      });
+  }, []);
+
 
   if (selectedGame) {
     return (

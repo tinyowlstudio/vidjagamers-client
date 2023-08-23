@@ -5,9 +5,9 @@ export const GameView = ({ game, onBackClick }) => {
     game.genres.forEach((genre, index)=>{
         //check if it's not the last in the list for the comma
         if (index !== game.genres.length - 1) {
-            genreList += genre + ", ";
+            genreList += genre.name + ", ";
           } else {
-            genreList += genre; // if its the last, no comma
+            genreList += genre.name; // if its the last, no comma
           }
     });
 
@@ -21,12 +21,14 @@ export const GameView = ({ game, onBackClick }) => {
     });
 
   return (
-    <div class="game-container">
-      <div class="game-image">
+    <div className="game-container">
+      <div className="game-image">
         <img src={game.image}></img>
       </div>
       <div>Title: {game.title}</div>
-      <div>Developer: {game.developer}</div>
+      <div>Series: {game.series}</div>
+      <div>Description: {game.description}</div>
+      <div>Developer: {game.developer.name}</div>
       <div>Genre: {genreList}</div>
       <div>Platforms: {platformList}</div>
       <div>Release Year: {game.releaseYear}</div>
