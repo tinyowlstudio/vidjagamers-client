@@ -1,16 +1,28 @@
 import PropTypes from "prop-types";
+import { Card } from "react-bootstrap";
 
 export const GameCard = ({ game, onGameClick }) => {
   //   return <div>some title</div>;
   //return <div>{game.title}</div>;
   return(
+    <Card className="h-100">
     <div
       onClick={() => {
         onGameClick(game);
       }}
     >
-      {game.title}
+      <Card.Img variant="top" src={game.image} />
+      <Card.Body>
+        <Card.Title>
+         <h2>{game.title}</h2> 
+        </Card.Title>
+        <Card.Text>
+          { game.series ? (<>Series: {game.series} <br /></>) : ""}
+          {game.developer.name}
+        </Card.Text>
+      </Card.Body>
     </div>
+    </Card>
   );
 };
 

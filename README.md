@@ -1,3 +1,6 @@
+Ver 0.4 (7-24-2023)
+- Added React Bootstrap Components and custom scss
+
 Ver 0.3 (7-23-2023)
 - Added loginview, signupview, updated mainview to accomodate for logins, signups, jwt tokens and local storage. Login/Signup appear as in the main view if users are not logged in, then once a user logs in, they will stay logged in with the jwt token and will see the list of games. Game and User APIs were also updated seperately to ensure everything was in camelCase
 

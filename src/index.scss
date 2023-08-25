@@ -1,5 +1,65 @@
-$color: steelblue;
+//bootstrap is overriding the styles too much, need to place at the top
+@import '~bootstrap/scss/bootstrap.scss';
 
-.my-games {
-  color: $color;
+$pagecolor: rgb(31, 34, 32);
+$lighterpage: rgb(53, 55, 54);
+$textcolor: rgb(222, 227, 226);
+$buttoncolor: rgb(15, 85, 71);
+$inputcolor: rgb(226, 243, 240);
+
+body{
+  background-color:  $pagecolor;
+  color: $textcolor;
+}
+
+.form-control{
+  background-color: $inputcolor;
+}
+
+.front-section{
+  padding: 20px;
+}
+
+.btn{
+  margin-top: 10px;
+  background-color: $buttoncolor;
+}
+
+.container{
+  padding: 50px 0;
+}
+
+.game-grid{
+  .btn{
+    width: 100px;
+    float: right;
+  }
+}
+
+.card{
+  background-color:  $lighterpage;
+  color: $textcolor;
+}
+
+.game-container{
+  display: flex;
+  flex-wrap: wrap;
+  .game-container__image{
+    width: 40%;
+    border-radius: 10px;
+    overflow: hidden;
+    img{
+      width: 100%;
+    }
+  }
+  .game-container__content{
+    width: 60%;
+    padding-left: 30px;
+    h3{
+      font-size: 1.1em;
+    }
+  }
+  .btn{
+    display: block;
+  }
 }
