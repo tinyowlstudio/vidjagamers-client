@@ -1,13 +1,17 @@
 import { createRoot } from 'react-dom/client';
-
 import { MainView } from "./components/main-view/main-view";
+import Container from 'react-bootstrap/Container';
 
 // Import statement to indicate that you need to bundle `./index.scss`
 import "./index.scss";
 
 // Main component (will eventually use all the others)
 const VidjaGamersxApplication = () => {
-  return <MainView />;//short for <MainView></MainView> in jsx since there are no nested elements
+   return (
+  <Container>
+<MainView />
+  </Container>
+ );
 };
 
 // Finds the root of your app

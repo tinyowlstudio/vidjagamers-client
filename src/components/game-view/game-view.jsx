@@ -1,3 +1,5 @@
+import { Button } from "react-bootstrap";
+
 export const GameView = ({ game, onBackClick }) => {
     let genreList = "";
     let platformList ="";
@@ -22,18 +24,19 @@ export const GameView = ({ game, onBackClick }) => {
 
   return (
     <div className="game-container">
-      <div className="game-image">
+      <div className="game-container__image">
         <img src={game.image}></img>
       </div>
-      <div>Title: {game.title}</div>
-      <div>Series: {game.series}</div>
-      <div>Description: {game.description}</div>
-      <div>Developer: {game.developer.name}</div>
-      <div>Genre: {genreList}</div>
-      <div>Platforms: {platformList}</div>
-      <div>Release Year: {game.releaseYear}</div>
-
-      <button onClick={onBackClick}>Back</button>
+      <div className="game-container__content">
+      <div><h2>{game.title}</h2></div>
+      <div><h3>Series:</h3> {game.series}</div>
+      <div><h3>Description:</h3> {game.description}</div>
+      <div><h3>Developer:</h3> {game.developer.name}</div>
+      <div><h3>Genre:</h3> {genreList}</div>
+      <div><h3>Platforms:</h3> {platformList}</div>
+      <div><h3>Release Year:</h3> {game.releaseYear}</div>
+</div>
+      <Button onClick={onBackClick}>Back</Button>
     </div>
   );
 };
