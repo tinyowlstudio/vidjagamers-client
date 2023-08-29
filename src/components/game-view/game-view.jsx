@@ -1,9 +1,14 @@
 import { Button } from "react-bootstrap";
+import { useParams } from "react-router";
+import { Link } from "react-router-dom";
 
-export const GameView = ({ game, onBackClick }) => {
+export const GameView = ({ games }) => {
+  const { gameID } = useParams();
     let genreList = "";
     let platformList ="";
-    
+
+    const game = games.find((g) => g._id === gameID);
+
     game.genre.forEach((genre, index)=>{
         //check if it's not the last in the list for the comma
         if (index !== game.genre.length - 1) {
@@ -36,7 +41,9 @@ export const GameView = ({ game, onBackClick }) => {
       <div><h3>Platforms:</h3> {platformList}</div>
       <div><h3>Release Year:</h3> {game.releaseYear}</div>
 </div>
-      <Button onClick={onBackClick}>Back</Button>
+      <Link to={`/`}>
+        <Button className="back-button">Back</Button>
+      </Link>
     </div>
   );
 };

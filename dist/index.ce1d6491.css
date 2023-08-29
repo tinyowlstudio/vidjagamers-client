@@ -13174,8 +13174,11 @@ textarea.form-control-lg {
   }
 }
 
-body {
+* {
   color: #dee3e2;
+}
+
+body {
   background-color: #1f2220;
 }
 
@@ -13193,7 +13196,19 @@ body {
 }
 
 .container {
-  padding: 50px 0;
+  padding-bottom: 50px;
+}
+
+.navbar {
+  height: 75px;
+}
+
+.navbar .container {
+  padding: 0;
+}
+
+.navbar .container .navbar-brand, .navbar .container .navbar-collapse .navbar-nav .nav-link {
+  color: #dee3e2;
 }
 
 .game-grid .btn {
@@ -13233,7 +13248,5 @@ body {
 .game-container .btn {
   display: block;
 }
-
-
 
 /*# sourceMappingURL=index.ce1d6491.css.map */
