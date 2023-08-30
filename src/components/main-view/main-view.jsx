@@ -4,10 +4,12 @@ import { GameView } from "../game-view/game-view";
 import { LoginView } from "../login-view/login-view";
 import { SignupView } from "../signup-view/signup-view";
 import { NavigationBar } from "../navigation-bar/navigation-bar";
+import { ProfileView } from "../profile-view/profile-view";
 import Row from "react-bootstrap/Row";
 import Col from 'react-bootstrap/Col';
 import Button from "react-bootstrap/Button";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { ProfileView } from "../profile-view/profile-view";
 
 // Export this component to other files, which determines the look of the component
 export const MainView = () => {
@@ -17,6 +19,7 @@ export const MainView = () => {
   const storedUser = JSON.parse(localStorage.getItem("user"));
   const storedToken = localStorage.getItem("token");
   const [user, setUser] = useState(storedUser? storedUser : null); 
+  //const [userInfo, setUserInfo] = useState([]);
   const [token, setToken] = useState(storedToken? storedToken : null);
 
   useEffect(() => {
@@ -37,15 +40,19 @@ export const MainView = () => {
 
   return (
     <BrowserRouter>
-    <NavigationBar user={user} onLoggedOut={() => {
-                      setUser(null);
-                      setToken(null);
-                      localStorage.clear();}}/>
-    {/* //everything in the component must be wrapped in a single div
+      <NavigationBar
+        user={user}
+        onLoggedOut={() => {
+          setUser(null);
+          setToken(null);
+          localStorage.clear();
+        }}
+      />
+      {/* //everything in the component must be wrapped in a single div
     //you cant return two different elements next to each other */}
-    <Row className="justify-content-md-center">
-      <Routes>
-      <Route
+      <Row className="justify-content-md-center">
+        <Routes>
+          <Route
             path="/signup"
             element={
               <>
@@ -57,7 +64,6 @@ export const MainView = () => {
                   </Col>
                 )}
               </>
-
             }
           />
           <Route
@@ -68,27 +74,28 @@ export const MainView = () => {
                   <Navigate to="/" />
                 ) : (
                   <Col md={5}>
-                    <LoginView onLoggedIn={(user) => {
-                      setUser(user); //if the login was successful, set the user so useState isnt null
-                setToken(token); //set the token as well
-                      }} />
+                    <LoginView
+                      onLoggedIn={(user) => {
+                        setUser(user); //if the login was successful, set the user so useState isnt null
+                        setToken(token); //set the token as well
+                      }}
+                    />
                   </Col>
                 )}
               </>
-
             }
           />
-          <Route 
+          <Route
             path="/games/:gameID" //selected game
             element={
               <>
-                {!user ? (//if no user, redirect to login
+                {!user ? ( //if no user, redirect to login
                   <Navigate to="/login" replace />
                 ) : games.length === 0 ? (
                   <Col>The list is empty!</Col>
                 ) : (
                   <Col md={12}>
-                    <GameView games={games} />
+                    <GameView games={games} user={user} token={token}/>
                   </Col>
                 )}
               </>
@@ -105,26 +112,44 @@ export const MainView = () => {
                 ) : (
                   <>
                     {games.map((game) => (
-              <Col className="mb-4" key={game._id} xs={2} sm={4} md={3}>
-                <GameCard game={game} />
-                {/* <Button
-    onClick={() => {
-      setUser(null);
-      setToken(null);
-      localStorage.clear();
-    }}
-  >
-    Logout
-  </Button> */}
-              </Col>
-            ))}
+                      <Col className="mb-4" key={game._id} xs={2} sm={4} md={3}>
+                        <GameCard game={game} />
+                      </Col>
+                    ))}
                   </>
                 )}
               </>
             }
           />
-      </Routes>
-    </Row>
+          <Route
+            path="/profile"
+            element={
+              <>
+                {!user ? (
+                  <Navigate to="/login" replace />
+                ) : games.length === 0 ? (
+                  <Col>The list is empty!</Col>
+                ) : (
+                  <>
+                    <Col md={12}>
+                      <ProfileView 
+                      user={user} 
+                      token={token} 
+                      games={games}
+                      onLoggedOut={() => {
+                        setUser(null);
+                        setToken(null);
+                        localStorage.clear();
+                      }}
+                        />
+                    </Col>
+                  </>
+                )}
+              </>
+            }
+          />
+        </Routes>
+      </Row>
     </BrowserRouter>
   ); //idk why it worked when I put another row to nest the game card code
   //without it, each card took up one row instead of 4 per row

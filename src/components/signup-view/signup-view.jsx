@@ -39,16 +39,6 @@ export const SignupView = () => {
     //the form to fill out to sign up
     return (
       <Form onSubmit={handleSubmit}>
-        {/* <label>
-          Username:
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-            minLength="5"
-          />
-        </label> */}
         <Form.Group controlId="formUsername">
           <Form.Label>Username:</Form.Label>
           <Form.Control
@@ -69,16 +59,6 @@ export const SignupView = () => {
             required
           />
         </Form.Group>
-
-        {/* <label>
-          Email:
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </label> */}
         <Form.Group>
           <Form.Label>Email:</Form.Label>
           <Form.Control 
@@ -88,16 +68,6 @@ export const SignupView = () => {
           required
           />
         </Form.Group>
-
-        {/* <label>
-          Birthday:
-          <input
-            type="date"
-            value={birthday}
-            onChange={(e) => setBirthday(e.target.value)}
-            required
-          />
-        </label> */}
         <Form.Group>
           <Form.Label>Birthday:</Form.Label>
           <Form.Control 

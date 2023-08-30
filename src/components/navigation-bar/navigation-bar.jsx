@@ -27,7 +27,7 @@ export const NavigationBar = ({user, onLoggedOut}) => {
                 <Nav.Link as={Link} to="/" >
                   Home 
                 </Nav.Link>
-                <Nav.Link as={Link} to="/" >
+                <Nav.Link as={Link} to="/profile" >
                   Profile
                 </Nav.Link>
                 <Nav.Link //logs you out by resetting setUser and setToken to the useState null, also clears local storage for stored items

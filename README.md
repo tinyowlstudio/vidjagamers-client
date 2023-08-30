@@ -1,3 +1,9 @@
+Ver 0.5 (7-30-2023)
+- Added navigation bar that changes based on if the user is logged in or not
+- Added Route functionality and changed code accordingly so components use routes
+- Added profile-view component to view user info and favorited gamse as well as functionality for changing user API for username, password, email, and birthday
+- Added add and delete favorite game function to game-view, which pushes or deletes the game ID on the user's favoiteGame array
+
 Ver 0.4 (7-24-2023)
 - Added React Bootstrap Components and custom scss
 

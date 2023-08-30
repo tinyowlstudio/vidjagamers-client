@@ -27321,6 +27321,7 @@ var _gameView = require("../game-view/game-view");
 var _loginView = require("../login-view/login-view");
 var _signupView = require("../signup-view/signup-view");
 var _navigationBar = require("../navigation-bar/navigation-bar");
+var _profileView = require("../profile-view/profile-view");
 var _row = require("react-bootstrap/Row");
 var _rowDefault = parcelHelpers.interopDefault(_row);
 var _col = require("react-bootstrap/Col");
@@ -27336,6 +27337,7 @@ const MainView = ()=>{
     const storedUser = JSON.parse(localStorage.getItem("user"));
     const storedToken = localStorage.getItem("token");
     const [user, setUser] = (0, _react.useState)(storedUser ? storedUser : null);
+    //const [userInfo, setUserInfo] = useState([]);
     const [token, setToken] = (0, _react.useState)(storedToken ? storedToken : null);
     (0, _react.useEffect)(()=>{
         if (!token) return;
@@ -27361,8 +27363,8 @@ const MainView = ()=>{
                 }
             }, void 0, false, {
                 fileName: "src/components/main-view/main-view.jsx",
-                lineNumber: 40,
-                columnNumber: 5
+                lineNumber: 43,
+                columnNumber: 7
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _rowDefault.default), {
                 className: "justify-content-md-center",
@@ -27380,8 +27382,8 @@ const MainView = ()=>{
                             }, void 0, false)
                         }, void 0, false, {
                             fileName: "src/components/main-view/main-view.jsx",
-                            lineNumber: 48,
-                            columnNumber: 7
+                            lineNumber: 55,
+                            columnNumber: 11
                         }, undefined),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Route), {
                             path: "/login",
@@ -27400,7 +27402,7 @@ const MainView = ()=>{
                             }, void 0, false)
                         }, void 0, false, {
                             fileName: "src/components/main-view/main-view.jsx",
-                            lineNumber: 63,
+                            lineNumber: 69,
                             columnNumber: 11
                         }, undefined),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Route), {
@@ -27415,13 +27417,15 @@ const MainView = ()=>{
                                 }, void 0, false, void 0, void 0) : /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _colDefault.default), {
                                     md: 12,
                                     children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _gameView.GameView), {
-                                        games: games
+                                        games: games,
+                                        user: user,
+                                        token: token
                                     }, void 0, false, void 0, void 0)
                                 }, void 0, false, void 0, void 0)
                             }, void 0, false)
                         }, void 0, false, {
                             fileName: "src/components/main-view/main-view.jsx",
-                            lineNumber: 81,
+                            lineNumber: 88,
                             columnNumber: 11
                         }, undefined),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Route), {
@@ -27446,24 +27450,53 @@ const MainView = ()=>{
                             }, void 0, false)
                         }, void 0, false, {
                             fileName: "src/components/main-view/main-view.jsx",
-                            lineNumber: 97,
+                            lineNumber: 104,
+                            columnNumber: 11
+                        }, undefined),
+                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Route), {
+                            path: "/profile",
+                            element: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
+                                children: !user ? /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Navigate), {
+                                    to: "/login",
+                                    replace: true
+                                }, void 0, false, void 0, void 0) : games.length === 0 ? /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _colDefault.default), {
+                                    children: "The list is empty!"
+                                }, void 0, false, void 0, void 0) : /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
+                                    children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _colDefault.default), {
+                                        md: 12,
+                                        children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _profileView.ProfileView), {
+                                            user: user,
+                                            token: token,
+                                            games: games,
+                                            onLoggedOut: ()=>{
+                                                setUser(null);
+                                                setToken(null);
+                                                localStorage.clear();
+                                            }
+                                        }, void 0, false, void 0, void 0)
+                                    }, void 0, false, void 0, void 0)
+                                }, void 0, false)
+                            }, void 0, false)
+                        }, void 0, false, {
+                            fileName: "src/components/main-view/main-view.jsx",
+                            lineNumber: 124,
                             columnNumber: 11
                         }, undefined)
                     ]
                 }, void 0, true, {
                     fileName: "src/components/main-view/main-view.jsx",
-                    lineNumber: 47,
-                    columnNumber: 7
+                    lineNumber: 54,
+                    columnNumber: 9
                 }, undefined)
             }, void 0, false, {
                 fileName: "src/components/main-view/main-view.jsx",
-                lineNumber: 46,
-                columnNumber: 5
+                lineNumber: 53,
+                columnNumber: 7
             }, undefined)
         ]
     }, void 0, true, {
         fileName: "src/components/main-view/main-view.jsx",
-        lineNumber: 39,
+        lineNumber: 42,
         columnNumber: 5
     }, undefined); //idk why it worked when I put another row to nest the game card code
 //without it, each card took up one row instead of 4 per row
@@ -27478,7 +27511,7 @@ $RefreshReg$(_c, "MainView");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","@parcel/transformer-js/src/esmodule-helpers.js":"bmsdU","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"l3Ybb","react":"21dqq","../game-card/game-card":"3p24S","../game-view/game-view":"foMLl","../login-view/login-view":"9YtA0","react-bootstrap/Row":"cMC39","react-bootstrap/Col":"2L2I6","react-bootstrap/Button":"aPzUt","react-router-dom":"9xmpe","../signup-view/signup-view":"4OGiN","../navigation-bar/navigation-bar":"bsPVM"}],"bmsdU":[function(require,module,exports) {
+},{"react/jsx-dev-runtime":"iTorj","@parcel/transformer-js/src/esmodule-helpers.js":"bmsdU","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"l3Ybb","react":"21dqq","../game-card/game-card":"3p24S","../game-view/game-view":"foMLl","../login-view/login-view":"9YtA0","react-bootstrap/Row":"cMC39","react-bootstrap/Col":"2L2I6","react-bootstrap/Button":"aPzUt","react-router-dom":"9xmpe","../signup-view/signup-view":"4OGiN","../navigation-bar/navigation-bar":"bsPVM","../profile-view/profile-view":"2vVqf"}],"bmsdU":[function(require,module,exports) {
 exports.interopDefault = function(a) {
     return a && a.__esModule ? a : {
         default: a
@@ -46896,7 +46929,7 @@ var _reactBootstrap = require("react-bootstrap");
 var _reactRouter = require("react-router");
 var _reactRouterDom = require("react-router-dom");
 var _s = $RefreshSig$();
-const GameView = ({ games })=>{
+const GameView = ({ games, user, token })=>{
     _s();
     const { gameID } = (0, _reactRouter.useParams)();
     let genreList = "";
@@ -46912,6 +46945,60 @@ const GameView = ({ games })=>{
         if (index !== game.platform.length - 1) platformList += platform + ", ";
         else platformList += platform; // if its the last, no comma
     });
+    const handleAddGame = (event)=>{
+        // this prevents the default behavior of the form which is to reload the entire page
+        event.preventDefault();
+        // fetch(
+        //   `https://vidjagamers-779c791eee4b.herokuapp.com/users/${user.username}`,
+        //   {
+        //     headers: { Authorization: `Bearer ${token}` },
+        //   }
+        // )
+        //   .then((response) => response.json())
+        //   .then((data) => {
+        //     const favoriteGames = data.favoriteGames;
+        //     console.log(favoriteGames);
+        //     if (favoriteGames && favoriteGames.length > 0){
+        //       if (favoriteGames.find(game => game === gameID)) {
+        //         alert("Game is already favorited");
+        //         return;
+        //       }
+        //     }
+        //   })
+        //   .catch((e) => {
+        //     alert("Cant access favorite games");
+        //   });
+        fetch(`https://vidjagamers-779c791eee4b.herokuapp.com/users/${user.username}/games/${gameID}`, {
+            method: "POST",
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json"
+            }
+        }).then((response)=>{
+            //console.log(response.status, response.statusText);
+            if (response.ok) alert("Game added");
+            else alert("Unable to add game");
+        }).catch((e)=>{
+            alert("Something went wrong");
+        });
+    };
+    const handleDeleteGame = (event)=>{
+        // this prevents the default behavior of the form which is to reload the entire page
+        event.preventDefault();
+        fetch(`https://vidjagamers-779c791eee4b.herokuapp.com/users/${user.username}/games/${gameID}`, {
+            method: "DELETE",
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json"
+            }
+        }).then((response)=>{
+            //console.log(response.status, response.statusText);
+            if (response.ok) alert("Game deleted");
+            else alert("Unable to delete game");
+        }).catch((e)=>{
+            alert("Something went wrong");
+        });
+    };
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
         className: "game-container",
         children: [
@@ -46921,12 +47008,12 @@ const GameView = ({ games })=>{
                     src: game.image
                 }, void 0, false, {
                     fileName: "src/components/game-view/game-view.jsx",
-                    lineNumber: 33,
+                    lineNumber: 113,
                     columnNumber: 9
                 }, undefined)
             }, void 0, false, {
                 fileName: "src/components/game-view/game-view.jsx",
-                lineNumber: 32,
+                lineNumber: 112,
                 columnNumber: 7
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -46937,13 +47024,13 @@ const GameView = ({ games })=>{
                             children: game.title
                         }, void 0, false, {
                             fileName: "src/components/game-view/game-view.jsx",
-                            lineNumber: 36,
-                            columnNumber: 12
+                            lineNumber: 117,
+                            columnNumber: 11
                         }, undefined)
                     }, void 0, false, {
                         fileName: "src/components/game-view/game-view.jsx",
-                        lineNumber: 36,
-                        columnNumber: 7
+                        lineNumber: 116,
+                        columnNumber: 9
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
                         children: [
@@ -46951,16 +47038,16 @@ const GameView = ({ games })=>{
                                 children: "Series:"
                             }, void 0, false, {
                                 fileName: "src/components/game-view/game-view.jsx",
-                                lineNumber: 37,
-                                columnNumber: 12
+                                lineNumber: 120,
+                                columnNumber: 11
                             }, undefined),
                             " ",
                             game.series
                         ]
                     }, void 0, true, {
                         fileName: "src/components/game-view/game-view.jsx",
-                        lineNumber: 37,
-                        columnNumber: 7
+                        lineNumber: 119,
+                        columnNumber: 9
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
                         children: [
@@ -46968,16 +47055,16 @@ const GameView = ({ games })=>{
                                 children: "Description:"
                             }, void 0, false, {
                                 fileName: "src/components/game-view/game-view.jsx",
-                                lineNumber: 38,
-                                columnNumber: 12
+                                lineNumber: 123,
+                                columnNumber: 11
                             }, undefined),
                             " ",
                             game.description
                         ]
                     }, void 0, true, {
                         fileName: "src/components/game-view/game-view.jsx",
-                        lineNumber: 38,
-                        columnNumber: 7
+                        lineNumber: 122,
+                        columnNumber: 9
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
                         children: [
@@ -46985,16 +47072,16 @@ const GameView = ({ games })=>{
                                 children: "Developer:"
                             }, void 0, false, {
                                 fileName: "src/components/game-view/game-view.jsx",
-                                lineNumber: 39,
-                                columnNumber: 12
+                                lineNumber: 126,
+                                columnNumber: 11
                             }, undefined),
                             " ",
                             game.developer.name
                         ]
                     }, void 0, true, {
                         fileName: "src/components/game-view/game-view.jsx",
-                        lineNumber: 39,
-                        columnNumber: 7
+                        lineNumber: 125,
+                        columnNumber: 9
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
                         children: [
@@ -47002,16 +47089,16 @@ const GameView = ({ games })=>{
                                 children: "Genre:"
                             }, void 0, false, {
                                 fileName: "src/components/game-view/game-view.jsx",
-                                lineNumber: 40,
-                                columnNumber: 12
+                                lineNumber: 129,
+                                columnNumber: 11
                             }, undefined),
                             " ",
                             genreList
                         ]
                     }, void 0, true, {
                         fileName: "src/components/game-view/game-view.jsx",
-                        lineNumber: 40,
-                        columnNumber: 7
+                        lineNumber: 128,
+                        columnNumber: 9
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
                         children: [
@@ -47019,16 +47106,16 @@ const GameView = ({ games })=>{
                                 children: "Platforms:"
                             }, void 0, false, {
                                 fileName: "src/components/game-view/game-view.jsx",
-                                lineNumber: 41,
-                                columnNumber: 12
+                                lineNumber: 132,
+                                columnNumber: 11
                             }, undefined),
                             " ",
                             platformList
                         ]
                     }, void 0, true, {
                         fileName: "src/components/game-view/game-view.jsx",
-                        lineNumber: 41,
-                        columnNumber: 7
+                        lineNumber: 131,
+                        columnNumber: 9
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
                         children: [
@@ -47036,21 +47123,21 @@ const GameView = ({ games })=>{
                                 children: "Release Year:"
                             }, void 0, false, {
                                 fileName: "src/components/game-view/game-view.jsx",
-                                lineNumber: 42,
-                                columnNumber: 12
+                                lineNumber: 135,
+                                columnNumber: 11
                             }, undefined),
                             " ",
                             game.releaseYear
                         ]
                     }, void 0, true, {
                         fileName: "src/components/game-view/game-view.jsx",
-                        lineNumber: 42,
-                        columnNumber: 7
+                        lineNumber: 134,
+                        columnNumber: 9
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "src/components/game-view/game-view.jsx",
-                lineNumber: 35,
+                lineNumber: 115,
                 columnNumber: 7
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Link), {
@@ -47060,18 +47147,36 @@ const GameView = ({ games })=>{
                     children: "Back"
                 }, void 0, false, {
                     fileName: "src/components/game-view/game-view.jsx",
-                    lineNumber: 45,
+                    lineNumber: 139,
                     columnNumber: 9
                 }, undefined)
             }, void 0, false, {
                 fileName: "src/components/game-view/game-view.jsx",
-                lineNumber: 44,
+                lineNumber: 138,
+                columnNumber: 7
+            }, undefined),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Button), {
+                type: "submit",
+                onClick: handleAddGame,
+                children: "Add Game to Favorites"
+            }, void 0, false, {
+                fileName: "src/components/game-view/game-view.jsx",
+                lineNumber: 142,
+                columnNumber: 7
+            }, undefined),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Button), {
+                type: "submit",
+                onClick: handleDeleteGame,
+                children: "Delete Game from Favorites"
+            }, void 0, false, {
+                fileName: "src/components/game-view/game-view.jsx",
+                lineNumber: 145,
                 columnNumber: 7
             }, undefined)
         ]
     }, void 0, true, {
         fileName: "src/components/game-view/game-view.jsx",
-        lineNumber: 31,
+        lineNumber: 111,
         columnNumber: 5
     }, undefined);
 };
@@ -47126,7 +47231,7 @@ const LoginView = ({ onLoggedIn })=>{
             body: JSON.stringify(data)
         }).then((response)=>response.json()) //changes response to a json object so it can extract the jwt
         .then((data)=>{
-            console.log("Login response: ", data);
+            //console.log("Login response: ", data);
             if (data.user) {
                 localStorage.setItem("user", JSON.stringify(data.user));
                 localStorage.setItem("token", data.token);
@@ -47165,7 +47270,7 @@ const LoginView = ({ onLoggedIn })=>{
             }, void 0, true, {
                 fileName: "src/components/login-view/login-view.jsx",
                 lineNumber: 44,
-                columnNumber: 9
+                columnNumber: 7
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Group, {
                 controlId: "formPassword",
@@ -47200,13 +47305,13 @@ const LoginView = ({ onLoggedIn })=>{
             }, void 0, false, {
                 fileName: "src/components/login-view/login-view.jsx",
                 lineNumber: 63,
-                columnNumber: 9
+                columnNumber: 7
             }, undefined)
         ]
     }, void 0, true, {
         fileName: "src/components/login-view/login-view.jsx",
         lineNumber: 43,
-        columnNumber: 7
+        columnNumber: 5
     }, undefined);
 };
 _s(LoginView, "Lrw7JeD9zj6OUWhT/IH4OIvPKEk=");
@@ -47276,7 +47381,7 @@ const SignupView = ()=>{
                         children: "Username:"
                     }, void 0, false, {
                         fileName: "src/components/signup-view/signup-view.jsx",
-                        lineNumber: 53,
+                        lineNumber: 43,
                         columnNumber: 11
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Control, {
@@ -47287,13 +47392,13 @@ const SignupView = ()=>{
                         minLength: "5"
                     }, void 0, false, {
                         fileName: "src/components/signup-view/signup-view.jsx",
-                        lineNumber: 54,
+                        lineNumber: 44,
                         columnNumber: 11
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "src/components/signup-view/signup-view.jsx",
-                lineNumber: 52,
+                lineNumber: 42,
                 columnNumber: 9
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Group, {
@@ -47303,7 +47408,7 @@ const SignupView = ()=>{
                         children: "Password:"
                     }, void 0, false, {
                         fileName: "src/components/signup-view/signup-view.jsx",
-                        lineNumber: 64,
+                        lineNumber: 54,
                         columnNumber: 11
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Control, {
@@ -47313,13 +47418,13 @@ const SignupView = ()=>{
                         required: true
                     }, void 0, false, {
                         fileName: "src/components/signup-view/signup-view.jsx",
-                        lineNumber: 65,
+                        lineNumber: 55,
                         columnNumber: 11
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "src/components/signup-view/signup-view.jsx",
-                lineNumber: 63,
+                lineNumber: 53,
                 columnNumber: 9
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Group, {
@@ -47328,7 +47433,7 @@ const SignupView = ()=>{
                         children: "Email:"
                     }, void 0, false, {
                         fileName: "src/components/signup-view/signup-view.jsx",
-                        lineNumber: 83,
+                        lineNumber: 63,
                         columnNumber: 11
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Control, {
@@ -47338,13 +47443,13 @@ const SignupView = ()=>{
                         required: true
                     }, void 0, false, {
                         fileName: "src/components/signup-view/signup-view.jsx",
-                        lineNumber: 84,
+                        lineNumber: 64,
                         columnNumber: 11
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "src/components/signup-view/signup-view.jsx",
-                lineNumber: 82,
+                lineNumber: 62,
                 columnNumber: 9
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Group, {
@@ -47353,7 +47458,7 @@ const SignupView = ()=>{
                         children: "Birthday:"
                     }, void 0, false, {
                         fileName: "src/components/signup-view/signup-view.jsx",
-                        lineNumber: 102,
+                        lineNumber: 72,
                         columnNumber: 11
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Control, {
@@ -47363,13 +47468,13 @@ const SignupView = ()=>{
                         required: true
                     }, void 0, false, {
                         fileName: "src/components/signup-view/signup-view.jsx",
-                        lineNumber: 103,
+                        lineNumber: 73,
                         columnNumber: 11
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "src/components/signup-view/signup-view.jsx",
-                lineNumber: 101,
+                lineNumber: 71,
                 columnNumber: 9
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _buttonDefault.default), {
@@ -47377,7 +47482,7 @@ const SignupView = ()=>{
                 children: "Submit"
             }, void 0, false, {
                 fileName: "src/components/signup-view/signup-view.jsx",
-                lineNumber: 110,
+                lineNumber: 80,
                 columnNumber: 9
             }, undefined)
         ]
@@ -47473,7 +47578,7 @@ const NavigationBar = ({ user, onLoggedOut })=>{
                                     }, undefined),
                                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Nav).Link, {
                                         as: (0, _reactRouterDom.Link),
-                                        to: "/",
+                                        to: "/profile",
                                         children: "Profile"
                                     }, void 0, false, {
                                         fileName: "src/components/navigation-bar/navigation-bar.jsx",
@@ -47523,6 +47628,383 @@ $RefreshReg$(_c, "NavigationBar");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","react-bootstrap":"3AD9A","react-router-dom":"9xmpe","@parcel/transformer-js/src/esmodule-helpers.js":"bmsdU","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"l3Ybb"}]},["55Yf8","6unuB","d8Dch"], "d8Dch", "parcelRequire2e06")
+},{"react/jsx-dev-runtime":"iTorj","react-bootstrap":"3AD9A","react-router-dom":"9xmpe","@parcel/transformer-js/src/esmodule-helpers.js":"bmsdU","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"l3Ybb"}],"2vVqf":[function(require,module,exports) {
+var $parcel$ReactRefreshHelpers$3c12 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+$parcel$ReactRefreshHelpers$3c12.prelude(module);
+
+try {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "ProfileView", ()=>ProfileView);
+var _jsxDevRuntime = require("react/jsx-dev-runtime");
+var _gameCard = require("../game-card/game-card");
+var _react = require("react");
+var _form = require("react-bootstrap/Form");
+var _formDefault = parcelHelpers.interopDefault(_form);
+var _reactBootstrap = require("react-bootstrap");
+var _row = require("react-bootstrap/Row");
+var _rowDefault = parcelHelpers.interopDefault(_row);
+var _col = require("react-bootstrap/Col");
+var _colDefault = parcelHelpers.interopDefault(_col);
+var _s = $RefreshSig$();
+const ProfileView = ({ user, token, games, onLoggedOut })=>{
+    _s();
+    //const { username } = useParams();
+    const [userInfo, setUserInfo] = (0, _react.useState)(user); //define the username for the link
+    (0, _react.useEffect)(()=>{
+        //instead of comparing usernames, can't you go straight to the username URL?
+        //you cant access /users with just the token, you can only access your username
+        fetch(`https://vidjagamers-779c791eee4b.herokuapp.com/users/${userInfo.username}`, //`https://vidjagamers-779c791eee4b.herokuapp.com/users`,
+        {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }).then((response)=>response.json()).then((data)=>{
+            //const foundUser = data.find((u) => u.username === user.username);
+            //console.log(foundUser);
+            setUserInfo(data);
+        });
+    }, [
+        userInfo.username,
+        token
+    ]); //execute again if these change
+    const [username, setUsername] = (0, _react.useState)("");
+    const [password, setPassword] = (0, _react.useState)("");
+    const [email, setEmail] = (0, _react.useState)("");
+    const [birthday, setBirthday] = (0, _react.useState)("");
+    let favoriteGames;
+    if (userInfo.favoriteGames && userInfo.favoriteGames.length !== 0) favoriteGames = games.filter((g)=>userInfo.favoriteGames.includes(g._id));
+    else favoriteGames = [];
+    //console.log(favoriteGames)
+    const handleUpdate = (event)=>{
+        // this prevents the default behavior of the form which is to reload the entire page
+        event.preventDefault();
+        //have an empty array and place things inside if
+        //they exist in the fields
+        const updatedData = {};
+        if (username !== "") updatedData.username = username;
+        if (password !== "") updatedData.password = password;
+        if (email !== "") updatedData.email = email;
+        if (birthday !== "") updatedData.birthday = birthday;
+        //console.log(updatedData);
+        //if nothing was changed, dont execute the rest
+        if (Object.keys(updatedData).length === 0) {
+            alert("No changes made.");
+            return;
+        }
+        fetch(`https://vidjagamers-779c791eee4b.herokuapp.com/users/${user.username}`, {
+            method: "PUT",
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(updatedData)
+        }).then((response)=>{
+            //console.log("Update response: ", updatedData);
+            if (response.ok) {
+                alert("Change successful");
+                setUserInfo(updatedData); //place new info to be shown using userInfo
+                window.location.reload();
+            } else alert("Change was unsuccessful");
+        }).catch((e)=>{
+            alert("Something went wrong");
+            window.location.reload();
+        });
+    };
+    const handleDelete = (event)=>{
+        fetch(`https://vidjagamers-779c791eee4b.herokuapp.com/users/${user.username}`, {
+            method: "DELETE",
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json"
+            }
+        }).then((response)=>{
+            //console.log("Delete response: ", udata);
+            if (response.ok) {
+                alert("Deletion successful");
+                window.location.reload();
+                onLoggedOut(); //need to remove stored info after deleting the account
+            } else alert("Deletion was unsuccessful");
+        }).catch((e)=>{
+            alert("Something went wrong");
+            window.location.reload();
+        });
+    };
+    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+        children: [
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _rowDefault.default), {
+                children: [
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _colDefault.default), {
+                        md: 6,
+                        children: [
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h2", {
+                                children: "Profile"
+                            }, void 0, false, {
+                                fileName: "src/components/profile-view/profile-view.jsx",
+                                lineNumber: 130,
+                                columnNumber: 9
+                            }, undefined),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                                children: [
+                                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("b", {
+                                        children: "Username: "
+                                    }, void 0, false, {
+                                        fileName: "src/components/profile-view/profile-view.jsx",
+                                        lineNumber: 132,
+                                        columnNumber: 11
+                                    }, undefined),
+                                    userInfo.username
+                                ]
+                            }, void 0, true, {
+                                fileName: "src/components/profile-view/profile-view.jsx",
+                                lineNumber: 131,
+                                columnNumber: 9
+                            }, undefined),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                                children: [
+                                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("b", {
+                                        children: "Email: "
+                                    }, void 0, false, {
+                                        fileName: "src/components/profile-view/profile-view.jsx",
+                                        lineNumber: 136,
+                                        columnNumber: 11
+                                    }, undefined),
+                                    userInfo.email
+                                ]
+                            }, void 0, true, {
+                                fileName: "src/components/profile-view/profile-view.jsx",
+                                lineNumber: 135,
+                                columnNumber: 9
+                            }, undefined),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                                children: [
+                                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("b", {
+                                        children: "Birthday: "
+                                    }, void 0, false, {
+                                        fileName: "src/components/profile-view/profile-view.jsx",
+                                        lineNumber: 140,
+                                        columnNumber: 11
+                                    }, undefined),
+                                    userInfo.birthday
+                                ]
+                            }, void 0, true, {
+                                fileName: "src/components/profile-view/profile-view.jsx",
+                                lineNumber: 139,
+                                columnNumber: 9
+                            }, undefined)
+                        ]
+                    }, void 0, true, {
+                        fileName: "src/components/profile-view/profile-view.jsx",
+                        lineNumber: 129,
+                        columnNumber: 7
+                    }, undefined),
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _colDefault.default), {
+                        md: 6,
+                        children: [
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h2", {
+                                children: "Reset Info"
+                            }, void 0, false, {
+                                fileName: "src/components/profile-view/profile-view.jsx",
+                                lineNumber: 145,
+                                columnNumber: 9
+                            }, undefined),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default), {
+                                onSubmit: handleUpdate,
+                                children: [
+                                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Group, {
+                                        controlId: "formUsername",
+                                        children: [
+                                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Label, {
+                                                children: "Username:"
+                                            }, void 0, false, {
+                                                fileName: "src/components/profile-view/profile-view.jsx",
+                                                lineNumber: 148,
+                                                columnNumber: 13
+                                            }, undefined),
+                                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Control, {
+                                                type: "text",
+                                                value: username,
+                                                onChange: (e)=>setUsername(e.target.value),
+                                                minLength: "5"
+                                            }, void 0, false, {
+                                                fileName: "src/components/profile-view/profile-view.jsx",
+                                                lineNumber: 149,
+                                                columnNumber: 13
+                                            }, undefined)
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "src/components/profile-view/profile-view.jsx",
+                                        lineNumber: 147,
+                                        columnNumber: 11
+                                    }, undefined),
+                                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Group, {
+                                        controlId: "formPassword",
+                                        children: [
+                                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Label, {
+                                                children: "Password:"
+                                            }, void 0, false, {
+                                                fileName: "src/components/profile-view/profile-view.jsx",
+                                                lineNumber: 158,
+                                                columnNumber: 13
+                                            }, undefined),
+                                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Control, {
+                                                type: "password",
+                                                value: password,
+                                                onChange: (e)=>setPassword(e.target.value)
+                                            }, void 0, false, {
+                                                fileName: "src/components/profile-view/profile-view.jsx",
+                                                lineNumber: 159,
+                                                columnNumber: 13
+                                            }, undefined)
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "src/components/profile-view/profile-view.jsx",
+                                        lineNumber: 157,
+                                        columnNumber: 11
+                                    }, undefined),
+                                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Group, {
+                                        children: [
+                                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Label, {
+                                                children: "Email:"
+                                            }, void 0, false, {
+                                                fileName: "src/components/profile-view/profile-view.jsx",
+                                                lineNumber: 166,
+                                                columnNumber: 13
+                                            }, undefined),
+                                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Control, {
+                                                type: "email",
+                                                value: email,
+                                                onChange: (e)=>setEmail(e.target.value)
+                                            }, void 0, false, {
+                                                fileName: "src/components/profile-view/profile-view.jsx",
+                                                lineNumber: 167,
+                                                columnNumber: 13
+                                            }, undefined)
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "src/components/profile-view/profile-view.jsx",
+                                        lineNumber: 165,
+                                        columnNumber: 11
+                                    }, undefined),
+                                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Group, {
+                                        children: [
+                                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Label, {
+                                                children: "Birthday:"
+                                            }, void 0, false, {
+                                                fileName: "src/components/profile-view/profile-view.jsx",
+                                                lineNumber: 174,
+                                                columnNumber: 13
+                                            }, undefined),
+                                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Control, {
+                                                type: "date",
+                                                value: birthday,
+                                                onChange: (e)=>setBirthday(e.target.value)
+                                            }, void 0, false, {
+                                                fileName: "src/components/profile-view/profile-view.jsx",
+                                                lineNumber: 175,
+                                                columnNumber: 13
+                                            }, undefined)
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "src/components/profile-view/profile-view.jsx",
+                                        lineNumber: 173,
+                                        columnNumber: 11
+                                    }, undefined),
+                                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Button), {
+                                        type: "submit",
+                                        children: "Submit"
+                                    }, void 0, false, {
+                                        fileName: "src/components/profile-view/profile-view.jsx",
+                                        lineNumber: 181,
+                                        columnNumber: 11
+                                    }, undefined)
+                                ]
+                            }, void 0, true, {
+                                fileName: "src/components/profile-view/profile-view.jsx",
+                                lineNumber: 146,
+                                columnNumber: 9
+                            }, undefined),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Button), {
+                                type: "submit",
+                                onClick: handleDelete,
+                                children: "Delete Account"
+                            }, void 0, false, {
+                                fileName: "src/components/profile-view/profile-view.jsx",
+                                lineNumber: 183,
+                                columnNumber: 9
+                            }, undefined)
+                        ]
+                    }, void 0, true, {
+                        fileName: "src/components/profile-view/profile-view.jsx",
+                        lineNumber: 144,
+                        columnNumber: 7
+                    }, undefined)
+                ]
+            }, void 0, true, {
+                fileName: "src/components/profile-view/profile-view.jsx",
+                lineNumber: 128,
+                columnNumber: 7
+            }, undefined),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _rowDefault.default), {
+                children: [
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h2", {
+                        children: "Favorited Games"
+                    }, void 0, false, {
+                        fileName: "src/components/profile-view/profile-view.jsx",
+                        lineNumber: 190,
+                        columnNumber: 11
+                    }, undefined),
+                    userInfo.favoriteGames && userInfo.favoriteGames.length === 0 ? //i dont know why "userInfo.favoriteGames &&" is needed to make this work
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _colDefault.default), {
+                        children: "You have no favorited games. Go add some!"
+                    }, void 0, false, {
+                        fileName: "src/components/profile-view/profile-view.jsx",
+                        lineNumber: 193,
+                        columnNumber: 13
+                    }, undefined) : /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
+                        children: favoriteGames.map((game)=>/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _colDefault.default), {
+                                className: "mb-4",
+                                xs: 2,
+                                sm: 4,
+                                md: 3,
+                                children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _gameCard.GameCard), {
+                                    game: game
+                                }, void 0, false, {
+                                    fileName: "src/components/profile-view/profile-view.jsx",
+                                    lineNumber: 198,
+                                    columnNumber: 19
+                                }, undefined)
+                            }, game._id, false, {
+                                fileName: "src/components/profile-view/profile-view.jsx",
+                                lineNumber: 197,
+                                columnNumber: 17
+                            }, undefined))
+                    }, void 0, false)
+                ]
+            }, void 0, true, {
+                fileName: "src/components/profile-view/profile-view.jsx",
+                lineNumber: 189,
+                columnNumber: 9
+            }, undefined)
+        ]
+    }, void 0, true, {
+        fileName: "src/components/profile-view/profile-view.jsx",
+        lineNumber: 127,
+        columnNumber: 5
+    }, undefined);
+};
+_s(ProfileView, "kfZglNmwRc1z+jran9qvtez6w/c=");
+_c = ProfileView;
+var _c;
+$RefreshReg$(_c, "ProfileView");
+
+  $parcel$ReactRefreshHelpers$3c12.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+},{"react/jsx-dev-runtime":"iTorj","react-bootstrap":"3AD9A","@parcel/transformer-js/src/esmodule-helpers.js":"bmsdU","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"l3Ybb","react":"21dqq","react-bootstrap/Form":"iBZ80","react-bootstrap/Col":"2L2I6","../game-card/game-card":"3p24S","react-bootstrap/Row":"cMC39"}]},["55Yf8","6unuB","d8Dch"], "d8Dch", "parcelRequire2e06")
 
 //# sourceMappingURL=index.b4b6dfad.js.map
