@@ -6,40 +6,48 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { Button } from "react-bootstrap";
 
-export const ProfileView = ({ user, token, games, onLoggedOut }) => {
+export const ProfileView = ({ user, token, games, onUserUpdate, onLoggedOut }) => {
   //const { username } = useParams();
-  const [userInfo, setUserInfo] = useState(user); //define the username for the link
+  const [userInfo, setUserInfo] = useState( //set this up since useEffect is async
+    {username: "",
+    email: "",
+    birthday: "",
+    favoriteGames: []
+  }
+  ); 
+  let favoriteGames;
+
+  
   useEffect(() => {
     //instead of comparing usernames, can't you go straight to the username URL?
     //you cant access /users with just the token, you can only access your username
     fetch(
-      `https://vidjagamers-779c791eee4b.herokuapp.com/users/${userInfo.username}`,
-      //`https://vidjagamers-779c791eee4b.herokuapp.com/users`,
+      `https://vidjagamers-779c791eee4b.herokuapp.com/users/${user.username}`,
       {
         headers: { Authorization: `Bearer ${token}` },
       }
     )
       .then((response) => response.json())
       .then((data) => {
-        //const foundUser = data.find((u) => u.username === user.username);
-        //console.log(foundUser);
+        //console.log(data);
         setUserInfo(data);
+        
       });
-  }, [userInfo.username, token]); //execute again if these change
-
+  }, []); 
+  //console.log(userInfo.favoriteGames);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [birthday, setBirthday] = useState("");
 
-  let favoriteGames;
+  
   if (userInfo.favoriteGames && userInfo.favoriteGames.length !== 0) {
     favoriteGames = games.filter((g) => userInfo.favoriteGames.includes(g._id));
   } else {
     favoriteGames = [];
   }
 
-  //console.log(favoriteGames)
+  //console.log(favoriteGames);
 
   const handleUpdate = (event) => {
     // this prevents the default behavior of the form which is to reload the entire page
@@ -84,7 +92,16 @@ export const ProfileView = ({ user, token, games, onLoggedOut }) => {
         //console.log("Update response: ", updatedData);
         if (response.ok) {
           alert("Change successful");
-          setUserInfo(updatedData); //place new info to be shown using userInfo
+          onUserUpdate(updatedData); //update user 
+          //setUserInfo(updatedData);
+          //console.log(user);
+
+          //reset everything
+          setUpdatedData({});
+          setUsername("");
+          setPassword("");
+          setEmail("");
+          setBirthday("");
           window.location.reload();
         } else {
           alert("Change was unsuccessful");

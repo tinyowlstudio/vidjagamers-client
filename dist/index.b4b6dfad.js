@@ -27468,6 +27468,7 @@ const MainView = ()=>{
                                             user: user,
                                             token: token,
                                             games: games,
+                                            onUserUpdate: (updatedData)=>setUser(updatedData),
                                             onLoggedOut: ()=>{
                                                 setUser(null);
                                                 setToken(null);
@@ -47649,35 +47650,36 @@ var _rowDefault = parcelHelpers.interopDefault(_row);
 var _col = require("react-bootstrap/Col");
 var _colDefault = parcelHelpers.interopDefault(_col);
 var _s = $RefreshSig$();
-const ProfileView = ({ user, token, games, onLoggedOut })=>{
+const ProfileView = ({ user, token, games, onUserUpdate, onLoggedOut })=>{
     _s();
     //const { username } = useParams();
-    const [userInfo, setUserInfo] = (0, _react.useState)(user); //define the username for the link
+    const [userInfo, setUserInfo] = (0, _react.useState)({
+        username: "",
+        email: "",
+        birthday: "",
+        favoriteGames: []
+    });
+    let favoriteGames;
     (0, _react.useEffect)(()=>{
         //instead of comparing usernames, can't you go straight to the username URL?
         //you cant access /users with just the token, you can only access your username
-        fetch(`https://vidjagamers-779c791eee4b.herokuapp.com/users/${userInfo.username}`, //`https://vidjagamers-779c791eee4b.herokuapp.com/users`,
-        {
+        fetch(`https://vidjagamers-779c791eee4b.herokuapp.com/users/${user.username}`, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
         }).then((response)=>response.json()).then((data)=>{
-            //const foundUser = data.find((u) => u.username === user.username);
-            //console.log(foundUser);
+            //console.log(data);
             setUserInfo(data);
         });
-    }, [
-        userInfo.username,
-        token
-    ]); //execute again if these change
+    }, []);
+    //console.log(userInfo.favoriteGames);
     const [username, setUsername] = (0, _react.useState)("");
     const [password, setPassword] = (0, _react.useState)("");
     const [email, setEmail] = (0, _react.useState)("");
     const [birthday, setBirthday] = (0, _react.useState)("");
-    let favoriteGames;
     if (userInfo.favoriteGames && userInfo.favoriteGames.length !== 0) favoriteGames = games.filter((g)=>userInfo.favoriteGames.includes(g._id));
     else favoriteGames = [];
-    //console.log(favoriteGames)
+    //console.log(favoriteGames);
     const handleUpdate = (event)=>{
         // this prevents the default behavior of the form which is to reload the entire page
         event.preventDefault();
@@ -47705,7 +47707,15 @@ const ProfileView = ({ user, token, games, onLoggedOut })=>{
             //console.log("Update response: ", updatedData);
             if (response.ok) {
                 alert("Change successful");
-                setUserInfo(updatedData); //place new info to be shown using userInfo
+                onUserUpdate(updatedData); //update user 
+                //setUserInfo(updatedData);
+                //console.log(user);
+                //reset everything
+                setUpdatedData({});
+                setUsername("");
+                setPassword("");
+                setEmail("");
+                setBirthday("");
                 window.location.reload();
             } else alert("Change was unsuccessful");
         }).catch((e)=>{
@@ -47743,8 +47753,8 @@ const ProfileView = ({ user, token, games, onLoggedOut })=>{
                                 children: "Profile"
                             }, void 0, false, {
                                 fileName: "src/components/profile-view/profile-view.jsx",
-                                lineNumber: 130,
-                                columnNumber: 9
+                                lineNumber: 147,
+                                columnNumber: 11
                             }, undefined),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
                                 children: [
@@ -47752,15 +47762,15 @@ const ProfileView = ({ user, token, games, onLoggedOut })=>{
                                         children: "Username: "
                                     }, void 0, false, {
                                         fileName: "src/components/profile-view/profile-view.jsx",
-                                        lineNumber: 132,
-                                        columnNumber: 11
+                                        lineNumber: 149,
+                                        columnNumber: 13
                                     }, undefined),
                                     userInfo.username
                                 ]
                             }, void 0, true, {
                                 fileName: "src/components/profile-view/profile-view.jsx",
-                                lineNumber: 131,
-                                columnNumber: 9
+                                lineNumber: 148,
+                                columnNumber: 11
                             }, undefined),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
                                 children: [
@@ -47768,15 +47778,15 @@ const ProfileView = ({ user, token, games, onLoggedOut })=>{
                                         children: "Email: "
                                     }, void 0, false, {
                                         fileName: "src/components/profile-view/profile-view.jsx",
-                                        lineNumber: 136,
-                                        columnNumber: 11
+                                        lineNumber: 153,
+                                        columnNumber: 13
                                     }, undefined),
                                     userInfo.email
                                 ]
                             }, void 0, true, {
                                 fileName: "src/components/profile-view/profile-view.jsx",
-                                lineNumber: 135,
-                                columnNumber: 9
+                                lineNumber: 152,
+                                columnNumber: 11
                             }, undefined),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
                                 children: [
@@ -47784,21 +47794,21 @@ const ProfileView = ({ user, token, games, onLoggedOut })=>{
                                         children: "Birthday: "
                                     }, void 0, false, {
                                         fileName: "src/components/profile-view/profile-view.jsx",
-                                        lineNumber: 140,
-                                        columnNumber: 11
+                                        lineNumber: 157,
+                                        columnNumber: 13
                                     }, undefined),
                                     userInfo.birthday
                                 ]
                             }, void 0, true, {
                                 fileName: "src/components/profile-view/profile-view.jsx",
-                                lineNumber: 139,
-                                columnNumber: 9
+                                lineNumber: 156,
+                                columnNumber: 11
                             }, undefined)
                         ]
                     }, void 0, true, {
                         fileName: "src/components/profile-view/profile-view.jsx",
-                        lineNumber: 129,
-                        columnNumber: 7
+                        lineNumber: 146,
+                        columnNumber: 9
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _colDefault.default), {
                         md: 6,
@@ -47807,8 +47817,8 @@ const ProfileView = ({ user, token, games, onLoggedOut })=>{
                                 children: "Reset Info"
                             }, void 0, false, {
                                 fileName: "src/components/profile-view/profile-view.jsx",
-                                lineNumber: 145,
-                                columnNumber: 9
+                                lineNumber: 162,
+                                columnNumber: 11
                             }, undefined),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default), {
                                 onSubmit: handleUpdate,
@@ -47820,8 +47830,8 @@ const ProfileView = ({ user, token, games, onLoggedOut })=>{
                                                 children: "Username:"
                                             }, void 0, false, {
                                                 fileName: "src/components/profile-view/profile-view.jsx",
-                                                lineNumber: 148,
-                                                columnNumber: 13
+                                                lineNumber: 165,
+                                                columnNumber: 15
                                             }, undefined),
                                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Control, {
                                                 type: "text",
@@ -47830,14 +47840,14 @@ const ProfileView = ({ user, token, games, onLoggedOut })=>{
                                                 minLength: "5"
                                             }, void 0, false, {
                                                 fileName: "src/components/profile-view/profile-view.jsx",
-                                                lineNumber: 149,
-                                                columnNumber: 13
+                                                lineNumber: 166,
+                                                columnNumber: 15
                                             }, undefined)
                                         ]
                                     }, void 0, true, {
                                         fileName: "src/components/profile-view/profile-view.jsx",
-                                        lineNumber: 147,
-                                        columnNumber: 11
+                                        lineNumber: 164,
+                                        columnNumber: 13
                                     }, undefined),
                                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Group, {
                                         controlId: "formPassword",
@@ -47846,8 +47856,8 @@ const ProfileView = ({ user, token, games, onLoggedOut })=>{
                                                 children: "Password:"
                                             }, void 0, false, {
                                                 fileName: "src/components/profile-view/profile-view.jsx",
-                                                lineNumber: 158,
-                                                columnNumber: 13
+                                                lineNumber: 175,
+                                                columnNumber: 15
                                             }, undefined),
                                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Control, {
                                                 type: "password",
@@ -47855,14 +47865,14 @@ const ProfileView = ({ user, token, games, onLoggedOut })=>{
                                                 onChange: (e)=>setPassword(e.target.value)
                                             }, void 0, false, {
                                                 fileName: "src/components/profile-view/profile-view.jsx",
-                                                lineNumber: 159,
-                                                columnNumber: 13
+                                                lineNumber: 176,
+                                                columnNumber: 15
                                             }, undefined)
                                         ]
                                     }, void 0, true, {
                                         fileName: "src/components/profile-view/profile-view.jsx",
-                                        lineNumber: 157,
-                                        columnNumber: 11
+                                        lineNumber: 174,
+                                        columnNumber: 13
                                     }, undefined),
                                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Group, {
                                         children: [
@@ -47870,8 +47880,8 @@ const ProfileView = ({ user, token, games, onLoggedOut })=>{
                                                 children: "Email:"
                                             }, void 0, false, {
                                                 fileName: "src/components/profile-view/profile-view.jsx",
-                                                lineNumber: 166,
-                                                columnNumber: 13
+                                                lineNumber: 183,
+                                                columnNumber: 15
                                             }, undefined),
                                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Control, {
                                                 type: "email",
@@ -47879,14 +47889,14 @@ const ProfileView = ({ user, token, games, onLoggedOut })=>{
                                                 onChange: (e)=>setEmail(e.target.value)
                                             }, void 0, false, {
                                                 fileName: "src/components/profile-view/profile-view.jsx",
-                                                lineNumber: 167,
-                                                columnNumber: 13
+                                                lineNumber: 184,
+                                                columnNumber: 15
                                             }, undefined)
                                         ]
                                     }, void 0, true, {
                                         fileName: "src/components/profile-view/profile-view.jsx",
-                                        lineNumber: 165,
-                                        columnNumber: 11
+                                        lineNumber: 182,
+                                        columnNumber: 13
                                     }, undefined),
                                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Group, {
                                         children: [
@@ -47894,8 +47904,8 @@ const ProfileView = ({ user, token, games, onLoggedOut })=>{
                                                 children: "Birthday:"
                                             }, void 0, false, {
                                                 fileName: "src/components/profile-view/profile-view.jsx",
-                                                lineNumber: 174,
-                                                columnNumber: 13
+                                                lineNumber: 191,
+                                                columnNumber: 15
                                             }, undefined),
                                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Control, {
                                                 type: "date",
@@ -47903,28 +47913,28 @@ const ProfileView = ({ user, token, games, onLoggedOut })=>{
                                                 onChange: (e)=>setBirthday(e.target.value)
                                             }, void 0, false, {
                                                 fileName: "src/components/profile-view/profile-view.jsx",
-                                                lineNumber: 175,
-                                                columnNumber: 13
+                                                lineNumber: 192,
+                                                columnNumber: 15
                                             }, undefined)
                                         ]
                                     }, void 0, true, {
                                         fileName: "src/components/profile-view/profile-view.jsx",
-                                        lineNumber: 173,
-                                        columnNumber: 11
+                                        lineNumber: 190,
+                                        columnNumber: 13
                                     }, undefined),
                                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Button), {
                                         type: "submit",
                                         children: "Submit"
                                     }, void 0, false, {
                                         fileName: "src/components/profile-view/profile-view.jsx",
-                                        lineNumber: 181,
-                                        columnNumber: 11
+                                        lineNumber: 198,
+                                        columnNumber: 13
                                     }, undefined)
                                 ]
                             }, void 0, true, {
                                 fileName: "src/components/profile-view/profile-view.jsx",
-                                lineNumber: 146,
-                                columnNumber: 9
+                                lineNumber: 163,
+                                columnNumber: 11
                             }, undefined),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Button), {
                                 type: "submit",
@@ -47932,19 +47942,19 @@ const ProfileView = ({ user, token, games, onLoggedOut })=>{
                                 children: "Delete Account"
                             }, void 0, false, {
                                 fileName: "src/components/profile-view/profile-view.jsx",
-                                lineNumber: 183,
-                                columnNumber: 9
+                                lineNumber: 200,
+                                columnNumber: 11
                             }, undefined)
                         ]
                     }, void 0, true, {
                         fileName: "src/components/profile-view/profile-view.jsx",
-                        lineNumber: 144,
-                        columnNumber: 7
+                        lineNumber: 161,
+                        columnNumber: 9
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "src/components/profile-view/profile-view.jsx",
-                lineNumber: 128,
+                lineNumber: 145,
                 columnNumber: 7
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _rowDefault.default), {
@@ -47953,16 +47963,16 @@ const ProfileView = ({ user, token, games, onLoggedOut })=>{
                         children: "Favorited Games"
                     }, void 0, false, {
                         fileName: "src/components/profile-view/profile-view.jsx",
-                        lineNumber: 190,
-                        columnNumber: 11
+                        lineNumber: 207,
+                        columnNumber: 9
                     }, undefined),
                     userInfo.favoriteGames && userInfo.favoriteGames.length === 0 ? //i dont know why "userInfo.favoriteGames &&" is needed to make this work
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _colDefault.default), {
                         children: "You have no favorited games. Go add some!"
                     }, void 0, false, {
                         fileName: "src/components/profile-view/profile-view.jsx",
-                        lineNumber: 193,
-                        columnNumber: 13
+                        lineNumber: 210,
+                        columnNumber: 11
                     }, undefined) : /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
                         children: favoriteGames.map((game)=>/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _colDefault.default), {
                                 className: "mb-4",
@@ -47973,29 +47983,29 @@ const ProfileView = ({ user, token, games, onLoggedOut })=>{
                                     game: game
                                 }, void 0, false, {
                                     fileName: "src/components/profile-view/profile-view.jsx",
-                                    lineNumber: 198,
-                                    columnNumber: 19
+                                    lineNumber: 215,
+                                    columnNumber: 17
                                 }, undefined)
                             }, game._id, false, {
                                 fileName: "src/components/profile-view/profile-view.jsx",
-                                lineNumber: 197,
-                                columnNumber: 17
+                                lineNumber: 214,
+                                columnNumber: 15
                             }, undefined))
                     }, void 0, false)
                 ]
             }, void 0, true, {
                 fileName: "src/components/profile-view/profile-view.jsx",
-                lineNumber: 189,
-                columnNumber: 9
+                lineNumber: 206,
+                columnNumber: 7
             }, undefined)
         ]
     }, void 0, true, {
         fileName: "src/components/profile-view/profile-view.jsx",
-        lineNumber: 127,
+        lineNumber: 144,
         columnNumber: 5
     }, undefined);
 };
-_s(ProfileView, "kfZglNmwRc1z+jran9qvtez6w/c=");
+_s(ProfileView, "7LFZ4rTXSrpIwmijJt/XtdwyDNM=");
 _c = ProfileView;
 var _c;
 $RefreshReg$(_c, "ProfileView");

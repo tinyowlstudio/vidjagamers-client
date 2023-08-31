@@ -136,6 +136,7 @@ export const MainView = () => {
                       user={user} 
                       token={token} 
                       games={games}
+                      onUserUpdate={(updatedData) => setUser(updatedData)}
                       onLoggedOut={() => {
                         setUser(null);
                         setToken(null);
