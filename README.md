@@ -19,6 +19,7 @@ User and game info are stored on an API, and the app itself accesses said API so
 - Allow users to click developers, series, genres, platforms and year to see a full list of games with the same field
 - Allow search bar to find games based on partial strings that match rather than exact strings, case insensitivity, and dash/hyphen inclusion/exclusion
 
+## Versions
 **Ver 0.6 (7-9-2023)**
 - Changed favorited games function to work to see if the game is already favorited or not
 - Changed the functionality of favoriting games so that the button to add or delete favorite games depends if it is already on the list
