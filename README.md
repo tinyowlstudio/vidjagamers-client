@@ -3,10 +3,14 @@ This is an app that will allow users to view video games. They can register, log
 
 User and game info are stored on an API, and the app itself accesses said API so long as a JWT token is correct. Passwords are also encrypted on the API. The two databases were made specifically for this app.
 
-## Possible Future Updates
+## Current bugs/issues
 - Solve why JWT tokens after the first ever intial login aren't being updated and used for authorization
     - Unfortunately it still stores and uses the initial JWT from the first login
     - Any logins after the first one will bring up "Unauthorized" by the API
+- Handle CORS issue in which specified URLs are causing issues (to allow the removal of using all origins)
+- Solve why upon loging in the list shows empty and the user must refresh to get the games to show
+
+## Possible Future Updates
 - Increase game library to be more substantial OR use another Game API that already has a library of games
     - If using a different Game API, app functionality will need to be adjusted
 - Work on branding and visual design of the app
