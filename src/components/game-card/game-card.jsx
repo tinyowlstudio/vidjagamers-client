@@ -1,16 +1,15 @@
+import React from "react";
 import PropTypes from "prop-types";
 import { Card } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import { Button } from "react-bootstrap";
 
-export const GameCard = ({ game, onGameClick }) => {
+export const GameCard = ({ game }) => {
   //   return <div>some title</div>;
   //return <div>{game.title}</div>;
   return(
     <Card className="h-100">
-    <div
-      onClick={() => {
-        onGameClick(game);
-      }}
-    >
+    <div>
       <Card.Img variant="top" src={game.image} />
       <Card.Body>
         <Card.Title>
@@ -20,6 +19,9 @@ export const GameCard = ({ game, onGameClick }) => {
           { game.series ? (<>Series: {game.series} <br /></>) : ""}
           {game.developer.name}
         </Card.Text>
+        <Link to={`/games/${encodeURIComponent(game._id)}`}>
+        <Button variant="link">Open</Button>
+        </Link>
       </Card.Body>
     </div>
     </Card>
@@ -46,5 +48,5 @@ GameCard.propTypes ={
       })
     ),
   }).isRequired,
-  onGameClick: PropTypes.func.isRequired
+  // onGameClick: PropTypes.func.isRequired
 };

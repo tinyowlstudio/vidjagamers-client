@@ -7,9 +7,12 @@ $textcolor: rgb(222, 227, 226);
 $buttoncolor: rgb(15, 85, 71);
 $inputcolor: rgb(226, 243, 240);
 
+*{
+  color: $textcolor;
+}
+
 body{
   background-color:  $pagecolor;
-  color: $textcolor;
 }
 
 .form-control{
@@ -21,12 +24,31 @@ body{
 }
 
 .btn{
-  margin-top: 10px;
+  margin: 10px 10px 10px 0px;
   background-color: $buttoncolor;
 }
 
 .container{
-  padding: 50px 0;
+  padding-bottom: 50px;
+}
+
+.navbar{
+  height: 75px;
+  // align-items: center;
+  .container{
+    padding: 0;
+    .navbar-brand{
+      color: $textcolor;
+    }
+    .navbar-collapse{
+      
+      .navbar-nav{
+        .nav-link{
+          color: $textcolor;
+        }
+      }
+    }
+  }
 }
 
 .game-grid{

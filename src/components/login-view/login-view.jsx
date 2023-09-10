@@ -4,29 +4,30 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
 export const LoginView = ({ onLoggedIn }) => {
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
-    const handleSubmit = (event) => {
-      // this prevents the default behavior of the form which is to reload the entire page
-      event.preventDefault();
-  
-      const data = {
-        username: username,
-        password: password
-      };
-  
-      fetch("https://vidjagamers-779c791eee4b.herokuapp.com/login", {
-        method: "POST",
-        headers: {
-        "Content-Type": "application/json"
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const handleSubmit = (event) => {
+    // this prevents the default behavior of the form which is to reload the entire page
+    event.preventDefault();
+
+    const data = {
+      username: username,
+      password: password,
+    };
+
+    fetch("https://vidjagamers-779c791eee4b.herokuapp.com/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
       },
-        body: JSON.stringify(data)
-      }).then((response) => response.json()) //changes response to a json object so it can extract the jwt
+      body: JSON.stringify(data),
+    })
+      .then((response) => response.json()) //changes response to a json object so it can extract the jwt
       .then((data) => {
-        console.log("Login response: ", data);
+        //console.log("Login response: ", data);
         if (data.user) {
           localStorage.setItem("user", JSON.stringify(data.user));
-      localStorage.setItem("token", data.token);
+          localStorage.setItem("token", data.token);
           onLoggedIn(data.user, data.token); //pass user and token back to MainView so any API requests can see it
         } else {
           alert("No such user");
@@ -35,20 +36,19 @@ export const LoginView = ({ onLoggedIn }) => {
       .catch((e) => {
         alert("Something went wrong");
       });
-    };
+  };
 
-  
-    //the form to login
-    return (
-      <Form onSubmit={handleSubmit}>
-        <Form.Group controlId="formUsername">
+  //the form to login
+  return (
+    <Form onSubmit={handleSubmit}>
+      <Form.Group controlId="formUsername">
         <Form.Label>Username:</Form.Label>
         <Form.Control
           type="text"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           required
-          minLength="5" 
+          minLength="5"
         />
       </Form.Group>
       <Form.Group controlId="formPassword">
@@ -60,9 +60,9 @@ export const LoginView = ({ onLoggedIn }) => {
           required
         />
       </Form.Group>
-        <Button variant="primary" type="submit">
-          Submit
-        </Button>
-      </Form>
-    );
-  };
+      <Button variant="primary" type="submit">
+        Submit
+      </Button>
+    </Form>
+  );
+};
