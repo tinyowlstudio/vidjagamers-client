@@ -7,7 +7,6 @@ import { NavigationBar } from "../navigation-bar/navigation-bar";
 import { ProfileView } from "../profile-view/profile-view";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import Button from "react-bootstrap/Button";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { ProfileView } from "../profile-view/profile-view";
 
@@ -38,7 +37,7 @@ export const MainView = () => {
         setGames(data); //this sets games without reformatting
         //since the API is already in the right format, dont need to reformat the objects
       });
-  }, [token]); //dependency array; makes sure a fetch request is made everytime token changes
+  }, [token]);
 
 
  // Sort the games by "series" alphabetically with null/undefined values first
@@ -62,7 +61,6 @@ export const MainView = () => {
   const handleSearch = (category, text) => {
     setErrorMsg(""); //reset error message if there was one before
   
-    console.log(category, text, errorMsg);
     setSearchText(text);
     if (!text) {
       return;
@@ -75,7 +73,6 @@ export const MainView = () => {
       )
         .then((response) => response.json())
         .then((data) => {
-          //setSearchResults(data);
           //because a single game returns an object only, not an array
           //of objects, need to put it into an array
           setSearchResults(Array.isArray(data) ? data : [data]);
@@ -96,7 +93,6 @@ export const MainView = () => {
         .then((response) => response.json())
         .then((data) => {
           setSearchResults(data);
-          console.log("Search Results:"+searchResults);
         }).catch((error) => {
           // Handle API errors here and set an appropriate error message
           setSearchResults([]);
@@ -118,8 +114,6 @@ export const MainView = () => {
         onSearchCategory={handleCategoryChange}
         onSearch={handleSearch}
       />
-      {/* //everything in the component must be wrapped in a single div
-    //you cant return two different elements next to each other */}
       <Row className="justify-content-md-center">
         <Routes>
           <Route
@@ -232,6 +226,5 @@ export const MainView = () => {
         </Routes>
       </Row>
     </BrowserRouter>
-  ); //idk why it worked when I put another row to nest the game card code
-  //without it, each card took up one row instead of 4 per row
+  ); 
 };

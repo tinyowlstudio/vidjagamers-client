@@ -22,7 +22,6 @@ export const GameCard = ({ game, user, token  }) => {
       .then((response) => response.json())
       .then((data) => {
         const favoriteGames = data.favoriteGames;
-        //console.log(favoriteGames);
         if (favoriteGames && favoriteGames.length > 0) {
           if (favoriteGames.find((game) => game === gameID)) {
             setFavorited(true); // Update the favorited to true
@@ -31,7 +30,6 @@ export const GameCard = ({ game, user, token  }) => {
       })
       .catch((e) => {
         alert("Cant access favorite games");
-        //console.log("Waiting on favoriteGames load");
       });
   }, [gameID, token, user.username]); //refresh if any of these change
 
@@ -46,21 +44,16 @@ export const GameCard = ({ game, user, token  }) => {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
-        }, //doesnt need JSON.stringify cause the index.js code already takes the ID from the URL
+        },
       }
     )
       .then((response) => {
-        //console.log(response.status, response.statusText);
         if (response.ok) {
-          //alert("Game added");
-          // setFavorited(true);
-          // console.log("favorited games = " + favorited)
+
           if (favorited) {
             alert("Game is already on your list");
           } else {
             setFavorited(true);
-            //console.log("favorited games = " + favorited);
-            //alert("Game added");
           }
         } else {
           alert("Unable to add game");
@@ -86,17 +79,11 @@ export const GameCard = ({ game, user, token  }) => {
       }
     )
       .then((response) => {
-        //console.log(response.status, response.statusText);
         if (response.ok) {
-          // setFavorited(false);
-          // console.log("favorited games = " + favorited)
-          // alert("Game deleted");
           if (!favorited) {
             alert("Game isn't in your favorites list");
           } else {
             setFavorited(false);
-            //console.log("favorited games = " + favorited);
-            //alert("Game deleted");
           }
         } else {
           alert("Unable to delete game");
@@ -119,9 +106,6 @@ export const GameCard = ({ game, user, token  }) => {
           { game.series ? (<>Series: {game.series} <br /></>) : ""}
           {game.developer.name}
         </Card.Text>
-        {/* <Link to={`/games/${encodeURIComponent(game._id)}`}>
-        <Button variant="link">Open</Button>
-        </Link> */}
       </Card.Body>
       {favorited ? (
           <Button type="submit" className="favorite-button" onClick={handleDeleteGame}>
@@ -160,5 +144,4 @@ GameCard.propTypes ={
       })
     ),
   }).isRequired,
-  // onGameClick: PropTypes.func.isRequired
 };

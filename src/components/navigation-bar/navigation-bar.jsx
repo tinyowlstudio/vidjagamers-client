@@ -24,7 +24,6 @@ export const NavigationBar = ({
 
   const handleCategoryChange = (category) => {
     setSearchCategory(category);
-    //onSearchCategory(category);
     onSearchCategory(category, () => {
       console.log(searchCategory); // Use a callback to log the updated value
     });

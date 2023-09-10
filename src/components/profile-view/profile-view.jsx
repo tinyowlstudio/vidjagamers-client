@@ -1,13 +1,11 @@
 import { GameCard } from "../game-card/game-card";
 import { useState, useEffect } from "react";
 import Form from "react-bootstrap/Form";
-import { FormGroup } from "react-bootstrap";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { Button } from "react-bootstrap";
 
 export const ProfileView = ({ user, token, games, onUserUpdate, onLoggedOut }) => {
-  //const { username } = useParams();
   const [userInfo, setUserInfo] = useState( //set this up since useEffect is async
     {username: "",
     email: "",
@@ -29,12 +27,10 @@ export const ProfileView = ({ user, token, games, onUserUpdate, onLoggedOut }) =
     )
       .then((response) => response.json())
       .then((data) => {
-        //console.log(data);
         setUserInfo(data);
         
       });
   }, []); 
-  //console.log(userInfo.favoriteGames);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
@@ -46,8 +42,6 @@ export const ProfileView = ({ user, token, games, onUserUpdate, onLoggedOut }) =
   } else {
     favoriteGames = [];
   }
-
-  //console.log(favoriteGames);
 
   const handleUpdate = (event) => {
     // this prevents the default behavior of the form which is to reload the entire page
@@ -70,7 +64,6 @@ export const ProfileView = ({ user, token, games, onUserUpdate, onLoggedOut }) =
       updatedData.birthday = birthday;
     }
 
-    //console.log(updatedData);
     //if nothing was changed, dont execute the rest
     if (Object.keys(updatedData).length === 0) {
       alert("No changes made.");
@@ -89,12 +82,9 @@ export const ProfileView = ({ user, token, games, onUserUpdate, onLoggedOut }) =
       }
     )
       .then((response) => {
-        //console.log("Update response: ", updatedData);
         if (response.ok) {
           alert("Change successful");
           onUserUpdate(updatedData); //update user 
-          //setUserInfo(updatedData);
-          //console.log(user);
 
           //reset everything
           setUpdatedData({});
@@ -125,7 +115,6 @@ export const ProfileView = ({ user, token, games, onUserUpdate, onLoggedOut }) =
       }
     )
       .then((response) => {
-        //console.log("Delete response: ", udata);
         if (response.ok) {
           alert("Deletion successful");
           window.location.reload();
@@ -206,7 +195,6 @@ export const ProfileView = ({ user, token, games, onUserUpdate, onLoggedOut }) =
       <Row className="favorite-games-list">
         <h2>Favorited Games</h2>
         {userInfo.favoriteGames && userInfo.favoriteGames.length === 0 ? (
-          //i dont know why "userInfo.favoriteGames &&" is needed to make this work
           <Col>You have no favorited games. Go add some!</Col>
         ) : (
           <>
