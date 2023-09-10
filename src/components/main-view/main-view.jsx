@@ -6,29 +6,32 @@ import { SignupView } from "../signup-view/signup-view";
 import { NavigationBar } from "../navigation-bar/navigation-bar";
 import { ProfileView } from "../profile-view/profile-view";
 import Row from "react-bootstrap/Row";
-import Col from 'react-bootstrap/Col';
+import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { ProfileView } from "../profile-view/profile-view";
 
 // Export this component to other files, which determines the look of the component
 export const MainView = () => {
-
   const [games, setGames] = useState([]);
-  // const [selectedGame, setSelectedGame] = useState(null);
   const storedUser = JSON.parse(localStorage.getItem("user"));
   const storedToken = localStorage.getItem("token");
-  const [user, setUser] = useState(storedUser? storedUser : null); 
-  //const [userInfo, setUserInfo] = useState([]);
-  const [token, setToken] = useState(storedToken? storedToken : null);
+  const [user, setUser] = useState(storedUser ? storedUser : null);
+  const [token, setToken] = useState(storedToken ? storedToken : null);
+
+  const [selectedCategory, setSelectedCategory] = useState("title");
+  const [searchText, setSearchText] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+  const [errorMsg, setErrorMsg] = useState("");
 
   useEffect(() => {
-    if (!token) { //if theres no token, dont execute the rest
+    if (!token) {
+      //if theres no token, dont execute the rest
       return;
     }
 
     fetch("https://vidjagamers-779c791eee4b.herokuapp.com/games", {
-      headers: { Authorization: `Bearer ${token}` }
+      headers: { Authorization: `Bearer ${token}` },
     })
       .then((response) => response.json())
       .then((data) => {
@@ -37,6 +40,71 @@ export const MainView = () => {
       });
   }, [token]); //dependency array; makes sure a fetch request is made everytime token changes
 
+
+ // Sort the games by "series" alphabetically with null/undefined values first
+ const sortedGames = games.slice().sort((a, b) => {
+  // If both have no series or the same series, keep their order
+  if (!a.series && !b.series) return 0;
+  //check if a or b has no series compared to the other one
+  //if they dont, bring them forward on the list
+  if (!a.series) return -1; 
+  if (!b.series) return 1;  
+
+  // Compare series names alphabetically
+  return a.series.localeCompare(b.series);
+});
+
+
+  const handleCategoryChange = (category) => {
+    setSelectedCategory(category);
+  };
+
+  const handleSearch = (category, text) => {
+    setErrorMsg(""); //reset error message if there was one before
+  
+    console.log(category, text, errorMsg);
+    setSearchText(text);
+    if (!text) {
+      return;
+    } else if (category === "title") {
+      fetch(
+        `https://vidjagamers-779c791eee4b.herokuapp.com/games/${text}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          //setSearchResults(data);
+          //because a single game returns an object only, not an array
+          //of objects, need to put it into an array
+          setSearchResults(Array.isArray(data) ? data : [data]);
+          console.log("Search Results:"+searchResults);
+        }).catch((error) => {
+          // Handle API errors here and set an appropriate error message
+          setSearchResults([]);
+          setErrorMsg(`${category.charAt(0).toUpperCase() + category.slice(1)} ${text} is not found`);
+          console.error("Error fetching search results:", error);
+        });
+    } else {
+      fetch(
+        `https://vidjagamers-779c791eee4b.herokuapp.com/${category}/${text}/games`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          setSearchResults(data);
+          console.log("Search Results:"+searchResults);
+        }).catch((error) => {
+          // Handle API errors here and set an appropriate error message
+          setSearchResults([]);
+          setErrorMsg(`${category.charAt(0).toUpperCase() + category.slice(1)} ${text} is not found`);
+          console.error("Error fetching search results:", error);
+        });
+    }
+  };
 
   return (
     <BrowserRouter>
@@ -47,6 +115,8 @@ export const MainView = () => {
           setToken(null);
           localStorage.clear();
         }}
+        onSearchCategory={handleCategoryChange}
+        onSearch={handleSearch}
       />
       {/* //everything in the component must be wrapped in a single div
     //you cant return two different elements next to each other */}
@@ -95,7 +165,7 @@ export const MainView = () => {
                   <Col>The list is empty!</Col>
                 ) : (
                   <Col md={12}>
-                    <GameView games={games} user={user} token={token}/>
+                    <GameView games={games} user={user} token={token} />
                   </Col>
                 )}
               </>
@@ -109,11 +179,21 @@ export const MainView = () => {
                   <Navigate to="/login" replace />
                 ) : games.length === 0 ? (
                   <Col>The list is empty!</Col>
+                ) : errorMsg ? (
+                  <Col>{errorMsg}</Col>
+                ) : searchText ? (
+                  <>
+                    {searchResults.map((game) => (
+                      <Col className="mb-4" key={game._id}  sm={6} md={4} lg={3}>
+                        <GameCard game={game} user={user} token={token} />
+                      </Col>
+                    ))}
+                  </>
                 ) : (
                   <>
-                    {games.map((game) => (
-                      <Col className="mb-4" key={game._id} xs={2} sm={4} md={3}>
-                        <GameCard game={game} />
+                    {sortedGames.map((game) => (
+                      <Col className="mb-4" key={game._id} xs={12} md={6} lg={4} xl={3}>
+                        <GameCard game={game} user={user} token={token}/>
                       </Col>
                     ))}
                   </>
@@ -132,17 +212,17 @@ export const MainView = () => {
                 ) : (
                   <>
                     <Col md={12}>
-                      <ProfileView 
-                      user={user} 
-                      token={token} 
-                      games={games}
-                      onUserUpdate={(updatedData) => setUser(updatedData)}
-                      onLoggedOut={() => {
-                        setUser(null);
-                        setToken(null);
-                        localStorage.clear();
-                      }}
-                        />
+                      <ProfileView
+                        user={user}
+                        token={token}
+                        games={games}
+                        onUserUpdate={(updatedData) => setUser(updatedData)}
+                        onLoggedOut={() => {
+                          setUser(null);
+                          setToken(null);
+                          localStorage.clear();
+                        }}
+                      />
                     </Col>
                   </>
                 )}
@@ -155,4 +235,3 @@ export const MainView = () => {
   ); //idk why it worked when I put another row to nest the game card code
   //without it, each card took up one row instead of 4 per row
 };
-

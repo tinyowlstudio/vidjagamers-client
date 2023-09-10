@@ -1,87 +1,267 @@
-//bootstrap is overriding the styles too much, need to place at the top
-@import '~bootstrap/scss/bootstrap.scss';
-
 $pagecolor: rgb(31, 34, 32);
 $lighterpage: rgb(53, 55, 54);
 $textcolor: rgb(222, 227, 226);
 $buttoncolor: rgb(15, 85, 71);
+$lightbuttoncolor: lighten($buttoncolor, 8%);
+$lighterbuttoncolor: lighten($buttoncolor, 15%);
 $inputcolor: rgb(226, 243, 240);
 
-*{
+* {
   color: $textcolor;
 }
-
-body{
-  background-color:  $pagecolor;
+#root,
+html {
+  background-color: $pagecolor;
 }
 
-.form-control{
+.form-control {
   background-color: $inputcolor;
 }
 
-.front-section{
+.front-section {
   padding: 20px;
 }
 
-.btn{
+button.btn.btn-primary {
   margin: 10px 10px 10px 0px;
   background-color: $buttoncolor;
+  border: transparent;
+  &:hover {
+    background-color: $lightbuttoncolor;
+  }
+  &:active {
+    background-color: $lighterbuttoncolor;
+  }
 }
 
-.container{
+.container {
   padding-bottom: 50px;
+  position: relative;
 }
 
-.navbar{
-  height: 75px;
-  // align-items: center;
-  .container{
+.navbar {
+  height: 100px;
+  z-index: 100;
+  background-color: $pagecolor;
+  .container {
     padding: 0;
-    .navbar-brand{
+    .navbar-brand {
       color: $textcolor;
     }
-    .navbar-collapse{
-      
-      .navbar-nav{
-        .nav-link{
-          color: $textcolor;
-        }
+    .navbar-collapse {
+      background-color: transparent;
+      .navbar-nav {
+        flex-direction: row;
+      }
+    }
+    div.navbar-nav:last-child {
+      flex-direction: row;
+      input,
+      .btn,
+      .dropdown {
+        height: 40px;
+        margin: 0;
+      }
+      button.btn:first-child {
+        border-radius: 10px 0 0 10px;
+      }
+      input {
+        padding: 0 10px;
+        color: $lighterpage;
+        width: auto;
+      }
+      button.btn:nth-child(3) {
+        border-radius: 0 10px 10px 0;
       }
     }
   }
 }
 
-.game-grid{
-  .btn{
-    width: 100px;
-    float: right;
+a.card {
+  overflow: hidden;
+  background-color: $lighterpage;
+  color: $textcolor;
+  text-decoration: none;
+  height: 100%;
+  img.card-img-top {
+    object-fit: cover;
+    height: 70%;
+    min-height: 350px;
+  }
+  div.card-body {
+    display: flex;
+    flex-flow: column;
+    justify-content: space-between;
   }
 }
 
-.card{
-  background-color:  $lighterpage;
-  color: $textcolor;
-}
-
-.game-container{
+.game-container {
   display: flex;
   flex-wrap: wrap;
-  .game-container__image{
+  .game-container__image {
+    order: 1;
     width: 40%;
-    border-radius: 10px;
+    height: 100%;
+    border-radius: 30px;
     overflow: hidden;
-    img{
+    position: relative;
+    img {
       width: 100%;
+      object-fit: cover;
     }
   }
-  .game-container__content{
+  .game-container__content {
+    order: 2;
     width: 60%;
+    margin-top: 30px;
     padding-left: 30px;
-    h3{
-      font-size: 1.1em;
+    .grid {
+      margin: 20px 0 50px 0;
+      padding-bottom: 15px;
+      display: grid;
+      grid-template-columns: 1fr 0.75fr;
+      row-gap: 10px;
+      column-gap: 10px;
+      border-bottom: solid 0.5px $textcolor;
+      h3 {
+        font-size: 1.1em;
+        display: inline;
+      }
+      div:last-child {
+        grid-column: 1 / span 2;
+      }
     }
   }
-  .btn{
-    display: block;
+  a {
+    order: 3;
+    .btn {
+      display: block;
+    }
   }
 }
+
+.favorite-button.btn.btn-primary {
+  position: absolute;
+  margin: 0;
+  bottom: 0;
+  right: 0;
+  padding: 60px 20px 20px 60px;
+  background: linear-gradient(
+    -45deg,
+    $buttoncolor 0%,
+    $buttoncolor 50%,
+    rgba(0, 0, 255, 0) 50%,
+    rgba(0, 0, 255, 0) 100%
+  );
+  transition: background 1s ease;
+  &:hover {
+    background: linear-gradient(
+      -45deg,
+      $lightbuttoncolor 0%,
+      $lightbuttoncolor 50%,
+      rgba(0, 0, 255, 0) 50%,
+      rgba(0, 0, 255, 0) 100%
+    );
+  }
+  &:active {
+    background: linear-gradient(
+      -45deg,
+      $lighterbuttoncolor 0%,
+      $lighterbuttoncolor 50%,
+      rgba(0, 0, 255, 0) 50%,
+      rgba(0, 0, 255, 0) 100%
+    );
+  }
+  svg {
+    path {
+      color: rgb(221, 92, 120);
+    }
+  }
+}
+
+.delete-button.btn.btn-primary{
+  background-color: rgb(161, 30, 30);
+  float: right;
+  margin-top: -45px;
+  margin-right: 0;
+}
+
+.favorite-games-list.row{
+  margin-top: 50px;
+}
+
+@media (width <= 992px) {
+  .game-container {
+    .game-container__content {
+      .grid {
+        grid-template-columns: 1fr 1fr;
+        column-gap: 5px;
+      }
+    }
+  }
+}
+
+@media (width <= 768px) {
+  .game-container {
+    .game-container__image {
+      order: 2;
+      width: 100%;
+    }
+    .game-container__content {
+      order: 3;
+      width: 100%;
+      padding-left: 0;
+    }
+    a {
+      order: 1;
+    }
+  }
+
+  .navbar {
+    .container {
+      padding: 0;
+      .navbar-collapse {
+        background-color: $lighterpage;
+        .me-auto.navbar-nav {
+          font-size: 1.2em;
+          flex-direction: column;
+          padding: 0 20px;
+          .nav-link {
+            text-align: right;
+            width: 100%;
+            border-bottom: 0.5px solid gray;
+          }
+        }
+      }
+      div.navbar-nav:last-child {
+        float: right;
+        padding: 20px 20px 20px 0;
+      }
+    }
+  }
+
+  a.card {
+    flex-direction: row;
+    height: 200px;
+    img.card-img-top {
+      height: 100%;
+      max-width: 40%;
+      min-height: auto;
+      border-top-right-radius: 0;
+    }
+    div.card-body {
+      display: flex;
+      flex-flow: column;
+      justify-content: flex-start;
+    }
+  }
+}
+
+@media (width <= 765px) {
+  div.container {
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+}
+
+@import "~bootstrap/scss/bootstrap.scss";

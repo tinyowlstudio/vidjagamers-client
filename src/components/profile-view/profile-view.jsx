@@ -197,13 +197,13 @@ export const ProfileView = ({ user, token, games, onUserUpdate, onLoggedOut }) =
             </Form.Group>
             <Button type="submit">Submit</Button>
           </Form>
-          <Button type="submit" onClick={handleDelete}>
+          <Button type="submit" className="delete-button" onClick={handleDelete}>
             Delete Account
           </Button>
         </Col>
       </Row>
 
-      <Row>
+      <Row className="favorite-games-list">
         <h2>Favorited Games</h2>
         {userInfo.favoriteGames && userInfo.favoriteGames.length === 0 ? (
           //i dont know why "userInfo.favoriteGames &&" is needed to make this work
@@ -211,8 +211,8 @@ export const ProfileView = ({ user, token, games, onUserUpdate, onLoggedOut }) =
         ) : (
           <>
             {favoriteGames.map((game) => (
-              <Col className="mb-4" key={game._id} xs={2} sm={4} md={3}>
-                <GameCard game={game} />
+              <Col className="mb-4" key={game._id} xs={12} md={6} lg={4} xl={3}>
+                <GameCard game={game} user={user} token={token}/>
               </Col>
             ))}
           </>

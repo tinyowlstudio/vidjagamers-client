@@ -1,11 +1,16 @@
 import { Button } from "react-bootstrap";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart } from "@fortawesome/free-solid-svg-icons";
+import { faHeart as farHeart } from "@fortawesome/free-regular-svg-icons";
 
 export const GameView = ({ games, user, token }) => {
   const { gameID } = useParams();
   let genreList = "";
   let platformList = "";
+  const [favorited, setFavorited] = useState(false);
 
   const game = games.find((g) => g._id === gameID);
 
@@ -27,30 +32,32 @@ export const GameView = ({ games, user, token }) => {
     }
   });
 
+  useEffect(() => {
+    fetch(
+      `https://vidjagamers-779c791eee4b.herokuapp.com/users/${user.username}`,
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        const favoriteGames = data.favoriteGames;
+        console.log(favoriteGames);
+        if (favoriteGames && favoriteGames.length > 0) {
+          if (favoriteGames.find((game) => game === gameID)) {
+            setFavorited(true); // Update the favorited to true
+          }
+        }
+      })
+      .catch((e) => {
+        alert("Cant access favorite games");
+        console.log("Waiting on favoriteGames load");
+      });
+  }, [gameID, token, user.username]); //refresh if any of these change
+
   const handleAddGame = (event) => {
     // this prevents the default behavior of the form which is to reload the entire page
     event.preventDefault();
-    // fetch(
-    //   `https://vidjagamers-779c791eee4b.herokuapp.com/users/${user.username}`,
-    //   {
-    //     headers: { Authorization: `Bearer ${token}` },
-    //   }
-    // )
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     const favoriteGames = data.favoriteGames;
-    //     console.log(favoriteGames);
-    //     if (favoriteGames && favoriteGames.length > 0){
-    //       if (favoriteGames.find(game => game === gameID)) {
-    //         alert("Game is already favorited");
-    //         return;
-    //       }
-    //     }
-    //   })
-    //   .catch((e) => {
-    //     alert("Cant access favorite games");
-    //   });
-
 
     fetch(
       `https://vidjagamers-779c791eee4b.herokuapp.com/users/${user.username}/games/${gameID}`,
@@ -65,7 +72,16 @@ export const GameView = ({ games, user, token }) => {
       .then((response) => {
         //console.log(response.status, response.statusText);
         if (response.ok) {
-          alert("Game added");
+          //alert("Game added");
+          // setFavorited(true);
+          // console.log("favorited games = " + favorited)
+          if (favorited) {
+            alert("Game is already on your list");
+          } else {
+            setFavorited(true);
+            console.log("favorited games = " + favorited);
+            alert("Game added");
+          }
         } else {
           alert("Unable to add game");
         }
@@ -92,12 +108,16 @@ export const GameView = ({ games, user, token }) => {
       .then((response) => {
         //console.log(response.status, response.statusText);
         if (response.ok) {
-          alert("Game deleted");
-          // if(!favoriteGames.find(game => game === gameID)){
-          //   alert("Game isn't in your favorites list");
-          // }else{
-          //   alert("Game deleted");
-          // }
+          // setFavorited(false);
+          // console.log("favorited games = " + favorited)
+          // alert("Game deleted");
+          if (!favorited) {
+            alert("Game isn't in your favorites list");
+          } else {
+            setFavorited(false);
+            console.log("favorited games = " + favorited);
+            alert("Game deleted");
+          }
         } else {
           alert("Unable to delete game");
         }
@@ -111,40 +131,47 @@ export const GameView = ({ games, user, token }) => {
     <div className="game-container">
       <div className="game-container__image">
         <img src={game.image}></img>
+        {favorited ? (
+          <Button type="submit" className="favorite-button" onClick={handleDeleteGame}>
+            <FontAwesomeIcon
+              icon={faHeart}
+              size="lg"
+              color="rgb(220, 106, 161)"
+            />
+          </Button>
+        ) : (
+          <Button type="submit" className="favorite-button" onClick={handleAddGame}>
+            <FontAwesomeIcon icon={farHeart} size="lg" />
+          </Button>
+        )}
       </div>
       <div className="game-container__content">
         <div>
-          <h2>{game.title}</h2>
+          <h1>{game.title}</h1>
         </div>
-        <div>
-          <h3>Series:</h3> {game.series}
+        <div className="grid">
+          <div>
+            <h3>Series:</h3> {game.series}
+          </div>
+          <div>
+            <h3>Developer:</h3> {game.developer.name}
+          </div>
+          <div>
+            <h3>Genre:</h3> {genreList}
+          </div>
+          <div>
+            <h3>Release Year:</h3> {game.releaseYear}
+          </div>
+          <div>
+            <h3>Platforms:</h3> {platformList}
+          </div>
         </div>
-        <div>
-          <h3>Description:</h3> {game.description}
-        </div>
-        <div>
-          <h3>Developer:</h3> {game.developer.name}
-        </div>
-        <div>
-          <h3>Genre:</h3> {genreList}
-        </div>
-        <div>
-          <h3>Platforms:</h3> {platformList}
-        </div>
-        <div>
-          <h3>Release Year:</h3> {game.releaseYear}
-        </div>
+
+        <div>{game.description}</div>
       </div>
       <Link to={`/`}>
         <Button className="back-button">Back</Button>
       </Link>
-
-      <Button type="submit" onClick={handleAddGame}>
-        Add Game to Favorites
-      </Button>
-      <Button type="submit" onClick={handleDeleteGame}>
-        Delete Game from Favorites
-      </Button>
     </div>
   );
 };
