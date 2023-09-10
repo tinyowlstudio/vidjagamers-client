@@ -3,13 +3,100 @@ import PropTypes from "prop-types";
 import { Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { Button } from "react-bootstrap";
+import { useState, useEffect } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart } from "@fortawesome/free-solid-svg-icons";
+import { faHeart as farHeart } from "@fortawesome/free-regular-svg-icons";
 
-export const GameCard = ({ game }) => {
-  //   return <div>some title</div>;
-  //return <div>{game.title}</div>;
+export const GameCard = ({ game, user, token  }) => {
+  const gameID = game._id;
+  const [favorited, setFavorited] = useState(false);
+
+  useEffect(() => {
+    fetch(
+      `https://vidjagamers-779c791eee4b.herokuapp.com/users/${user.username}`,
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        const favoriteGames = data.favoriteGames;
+        if (favoriteGames && favoriteGames.length > 0) {
+          if (favoriteGames.find((game) => game === gameID)) {
+            setFavorited(true); // Update the favorited to true
+          }
+        }
+      })
+      .catch((e) => {
+        alert("Cant access favorite games");
+      });
+  }, [gameID, token, user.username]); //refresh if any of these change
+
+  const handleAddGame = (event) => {
+    // this prevents the default behavior of the form which is to reload the entire page
+    event.preventDefault();
+
+    fetch(
+      `https://vidjagamers-779c791eee4b.herokuapp.com/users/${user.username}/games/${gameID}`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    )
+      .then((response) => {
+        if (response.ok) {
+
+          if (favorited) {
+            alert("Game is already on your list");
+          } else {
+            setFavorited(true);
+          }
+        } else {
+          alert("Unable to add game");
+        }
+      })
+      .catch((e) => {
+        alert("Something went wrong");
+      });
+  };
+
+  const handleDeleteGame = (event) => {
+    // this prevents the default behavior of the form which is to reload the entire page
+    event.preventDefault();
+
+    fetch(
+      `https://vidjagamers-779c791eee4b.herokuapp.com/users/${user.username}/games/${gameID}`,
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        }, //doesnt need JSON.stringify cause the index.js code already takes the ID from the URL
+      }
+    )
+      .then((response) => {
+        if (response.ok) {
+          if (!favorited) {
+            alert("Game isn't in your favorites list");
+          } else {
+            setFavorited(false);
+          }
+        } else {
+          alert("Unable to delete game");
+        }
+      })
+      .catch((e) => {
+        alert("Something went wrong");
+      });
+  };
+
+
   return(
-    <Card className="h-100">
-    <div>
+    <Card className="game-card" as={Link} to={`/games/${encodeURIComponent(game._id)}`}>
       <Card.Img variant="top" src={game.image} />
       <Card.Body>
         <Card.Title>
@@ -19,11 +106,20 @@ export const GameCard = ({ game }) => {
           { game.series ? (<>Series: {game.series} <br /></>) : ""}
           {game.developer.name}
         </Card.Text>
-        <Link to={`/games/${encodeURIComponent(game._id)}`}>
-        <Button variant="link">Open</Button>
-        </Link>
       </Card.Body>
-    </div>
+      {favorited ? (
+          <Button type="submit" className="favorite-button" onClick={handleDeleteGame}>
+            <FontAwesomeIcon
+              icon={faHeart}
+              size="lg"
+              color="rgb(220, 106, 161)"
+            />
+          </Button>
+        ) : (
+          <Button type="submit" className="favorite-button" onClick={handleAddGame}>
+            <FontAwesomeIcon icon={farHeart} size="lg" />
+          </Button>
+        )}
     </Card>
   );
 };
@@ -48,5 +144,4 @@ GameCard.propTypes ={
       })
     ),
   }).isRequired,
-  // onGameClick: PropTypes.func.isRequired
 };
