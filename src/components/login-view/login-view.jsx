@@ -2,8 +2,12 @@ import React from "react";
 import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import { useSelector, useDispatch } from "react-redux"; 
+import { setUser } from "../../redux/reducers/user";
 
-export const LoginView = ({ onLoggedIn }) => {
+export const LoginView = ({ }) => {
+  const user = useSelector((state) => state.user); 
+  const dispatch = useDispatch();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const handleSubmit = (event) => {
@@ -25,15 +29,16 @@ export const LoginView = ({ onLoggedIn }) => {
       .then((response) => response.json()) //changes response to a json object so it can extract the jwt
       .then((data) => {
         if (data.user) {
-          localStorage.setItem("user", JSON.stringify(data.user));
-          localStorage.setItem("token", data.token);
-          onLoggedIn(data.user, data.token); //pass user and token back to MainView so any API requests can see it
+          //localStorage.setItem("user", JSON.stringify(data.user));
+          //localStorage.setItem("token", data.token);
+          //onLoggedIn(data.user, data.token); //pass user and token back to MainView so any API requests can see it
+          dispatch(setUser({ user: data.user, token: data.token }));
         } else {
-          alert("No such user");
+          alert("Incorrect username and/or password, or user doesn't exist");
         }
       })
       .catch((e) => {
-        alert("Something went wrong");
+        alert("Something went wrong with login");
       });
   };
 

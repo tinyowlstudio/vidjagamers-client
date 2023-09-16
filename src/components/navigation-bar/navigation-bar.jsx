@@ -8,15 +8,20 @@ import {
   DropdownButton,
 } from "react-bootstrap";
 import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux"; 
+import { setUser } from "../../redux/reducers/user";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
 export const NavigationBar = ({
-  user,
-  onLoggedOut,
+  //user,
+  //onLoggedOut,
   onSearchCategory,
   onSearch,
 }) => {
+  const userObj = useSelector((state) => state.user); 
+  const dispatch = useDispatch();
+
   const [searchCategory, setSearchCategory] = useState("title");
   const [searchText, setSearchText] = useState("");
   const navigate = useNavigate();
@@ -65,7 +70,7 @@ export const NavigationBar = ({
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          {!user && (
+          {!userObj.user && (
             //whats the point of this if youre redirected to login
             //when there is no user stored anyways? just in case there are errors?
             <>
@@ -79,14 +84,15 @@ export const NavigationBar = ({
               </Nav>
             </>
           )}
-          {user && (
+          {userObj.user && (
             <>
               <Nav className="me-auto">
                 <Nav.Link as={Link} to="/profile">
                   Profile
                 </Nav.Link>
                 <Nav.Link //logs you out by resetting setUser and setToken to the useState null, also clears local storage for stored items
-                  onClick={onLoggedOut}
+                  //onClick={onLoggedOut}
+                  onClick={() => dispatch(setUser({ user: null, token: null }))}
                 >
                   Logout
                 </Nav.Link>

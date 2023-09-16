@@ -2,17 +2,25 @@ import { Button } from "react-bootstrap";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { addFavoriteGame, deleteFavoriteGame } from "../../redux/reducers/user";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as farHeart } from "@fortawesome/free-regular-svg-icons";
 
-export const GameView = ({ games, user, token }) => {
+export const GameView = ({ games }) => {
   const { gameID } = useParams();
   let genreList = "";
   let platformList = "";
-  const [favorited, setFavorited] = useState(false);
+  const userInfo = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+
+  //need to see if favorited is on the list, previous if statements kept looping
+  const checkFavorited = userInfo.user.favoriteGames.includes(gameID); //returns true or false
+  const [favorited, setFavorited] = useState(checkFavorited);
 
   const game = games.find((g) => g._id === gameID);
+  console.log(game)
 
   game.genre.forEach((genre, index) => {
     //check if it's not the last in the list for the comma
@@ -32,48 +40,30 @@ export const GameView = ({ games, user, token }) => {
     }
   });
 
-  useEffect(() => {
-    fetch(
-      `https://vidjagamers-779c791eee4b.herokuapp.com/users/${user.username}`,
-      {
-        headers: { Authorization: `Bearer ${token}` },
-      }
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        const favoriteGames = data.favoriteGames;
-        if (favoriteGames && favoriteGames.length > 0) {
-          if (favoriteGames.find((game) => game === gameID)) {
-            setFavorited(true); // Update the favorited to true
-          }
-        }
-      })
-      .catch((e) => {
-        alert("Cant access favorite games");
-      });
-  }, [gameID, token, user.username]); //refresh if any of these change
-
   const handleAddGame = (event) => {
     // this prevents the default behavior of the form which is to reload the entire page
     event.preventDefault();
 
+    //as a precaution in case the favorite button fails to acknowledge favorite is true
+    if (favorited) {
+      alert("Game is already on your list");
+      return;
+    }
+
     fetch(
-      `https://vidjagamers-779c791eee4b.herokuapp.com/users/${user.username}/games/${gameID}`,
+      `https://vidjagamers-779c791eee4b.herokuapp.com/users/${userInfo.user.username}/games/${gameID}`,
       {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${userInfo.token}`,
           "Content-Type": "application/json",
         }, //doesnt need JSON.stringify cause the index.js code already takes the ID from the URL
       }
     )
       .then((response) => {
         if (response.ok) {
-          if (favorited) {
-            alert("Game is already on your list");
-          } else {
-            setFavorited(true);
-          }
+          setFavorited(true);
+          dispatch(addFavoriteGame({ gameID: gameID }));
         } else {
           alert("Unable to add game");
         }
@@ -87,23 +77,26 @@ export const GameView = ({ games, user, token }) => {
     // this prevents the default behavior of the form which is to reload the entire page
     event.preventDefault();
 
+    //as a precaution in case the favorite button fails to acknowledge favorite is fa;se
+    if (!favorited) {
+      alert("Game isn't in your favorites list");
+      return;
+    }
+
     fetch(
-      `https://vidjagamers-779c791eee4b.herokuapp.com/users/${user.username}/games/${gameID}`,
+      `https://vidjagamers-779c791eee4b.herokuapp.com/users/${userInfo.user.username}/games/${gameID}`,
       {
         method: "DELETE",
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${userInfo.token}`,
           "Content-Type": "application/json",
         }, //doesnt need JSON.stringify cause the index.js code already takes the ID from the URL
       }
     )
       .then((response) => {
         if (response.ok) {
-          if (!favorited) {
-            alert("Game isn't in your favorites list");
-          } else {
-            setFavorited(false);
-          }
+          setFavorited(false);
+          dispatch(deleteFavoriteGame({ gameID: gameID }));
         } else {
           alert("Unable to delete game");
         }
@@ -118,7 +111,11 @@ export const GameView = ({ games, user, token }) => {
       <div className="game-container__image">
         <img src={game.image}></img>
         {favorited ? (
-          <Button type="submit" className="favorite-button" onClick={handleDeleteGame}>
+          <Button
+            type="submit"
+            className="favorite-button"
+            onClick={handleDeleteGame}
+          >
             <FontAwesomeIcon
               icon={faHeart}
               size="lg"
@@ -126,7 +123,11 @@ export const GameView = ({ games, user, token }) => {
             />
           </Button>
         ) : (
-          <Button type="submit" className="favorite-button" onClick={handleAddGame}>
+          <Button
+            type="submit"
+            className="favorite-button"
+            onClick={handleAddGame}
+          >
             <FontAwesomeIcon icon={farHeart} size="lg" />
           </Button>
         )}
