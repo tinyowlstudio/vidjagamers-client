@@ -18,7 +18,7 @@ User and game info are stored on an API, and the app itself accesses said API so
 - Allow users to click developers, series, genres, platforms and year to see a full list of games with the same field
 
 ## Versions
-**Ver 0.7 (7-9-2023)**
+**Ver 0.7 (7-16-2023)**
 - Changed user object stored in local storage to Redux
     - Adjusted all code that deals with the user accordingly
 - Allowed for partial string searches (other than year since year is a Num) and case sensitivity 
