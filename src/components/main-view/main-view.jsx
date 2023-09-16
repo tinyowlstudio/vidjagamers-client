@@ -16,11 +16,7 @@ import { ProfileView } from "../profile-view/profile-view";
 // Export this component to other files, which determines the look of the component
 export const MainView = () => {
   const [games, setGames] = useState([]);
-  //const storedUser = JSON.parse(localStorage.getItem("user"));
-  //const storedToken = localStorage.getItem("token");
-  //const [user, setUser] = useState(storedUser ? storedUser : null);
   const userObj = useSelector((state) => state.user);
-  //const [token, setToken] = useState(storedToken ? storedToken : null);
 
   const dispatch = useDispatch();
   const [selectedCategory, setSelectedCategory] = useState("title");
@@ -119,12 +115,6 @@ export const MainView = () => {
   return (
     <BrowserRouter>
       <NavigationBar
-        // user={user}
-        // onLoggedOut={() => {
-        //   setUser(null);
-        //   setToken(null);
-        //   localStorage.clear();
-        // }}
         onSearchCategory={handleCategoryChange}
         onSearch={handleSearch}
       />
@@ -152,13 +142,7 @@ export const MainView = () => {
                   <Navigate to="/" />
                 ) : (
                   <Col md={5}>
-                    <LoginView
-
-                    // onLoggedIn={(user, token) => {
-                    //   setUser(user); //if the login was successful, set the user so useState isnt null
-                    //   setToken(token); //set the token as well
-                    // }}
-                    />
+                    <LoginView/>
                   </Col>
                 )}
               </>
@@ -176,7 +160,6 @@ export const MainView = () => {
                   <Col md={12}>
                     <GameView
                       games={games}
-                      //user={user} token={token}
                     />
                   </Col>
                 )}
@@ -199,7 +182,6 @@ export const MainView = () => {
                       <Col className="mb-4" key={game._id} sm={6} md={4} lg={3}>
                         <GameCard
                           game={game}
-                          //user={user} token={token}
                         />
                       </Col>
                     ))}
@@ -217,7 +199,6 @@ export const MainView = () => {
                       >
                         <GameCard
                           game={game}
-                          //user={user} token={token}
                         />
                       </Col>
                     ))}
@@ -238,15 +219,7 @@ export const MainView = () => {
                   <>
                     <Col md={12}>
                       <ProfileView
-                        //user={user}
-                        //token={token}
                         games={games}
-                        // onUserUpdate={(updatedData) => setUser(updatedData)}
-                        // onLoggedOut={() => {
-                        //   setUser(null);
-                        //   setToken(null);
-                        //   localStorage.clear();
-                        // }}
                       />
                     </Col>
                   </>

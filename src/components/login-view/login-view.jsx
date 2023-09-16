@@ -29,9 +29,6 @@ export const LoginView = ({ }) => {
       .then((response) => response.json()) //changes response to a json object so it can extract the jwt
       .then((data) => {
         if (data.user) {
-          //localStorage.setItem("user", JSON.stringify(data.user));
-          //localStorage.setItem("token", data.token);
-          //onLoggedIn(data.user, data.token); //pass user and token back to MainView so any API requests can see it
           dispatch(setUser({ user: data.user, token: data.token }));
         } else {
           alert("Incorrect username and/or password, or user doesn't exist");
