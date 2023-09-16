@@ -4,11 +4,8 @@ This is an app that will allow users to view video games. They can register, log
 User and game info are stored on an API, and the app itself accesses said API so long as a JWT token is correct. Passwords are also encrypted on the API. The two databases were made specifically for this app.
 
 ## Current bugs/issues
-- Solve why JWT tokens after the first ever intial login aren't being updated and used for authorization
-    - Unfortunately it still stores and uses the initial JWT from the first login
-    - Any logins after the first one will bring up "Unauthorized" by the API
 - Handle CORS issue in which specified URLs are causing issues (to allow the removal of using all origins)
-- Solve why upon loging in the list shows empty and the user must refresh to get the gmes to show
+- Due to change to Redux for the user object, redux-persist is used. Still unable to figure out how place the rehydrated state into the user object to allow for a redirect to the home page
 
 ## Possible Future Updates
 - Increase game library to be more substantial OR use another Game API that already has a library of games
@@ -19,9 +16,15 @@ User and game info are stored on an API, and the app itself accesses said API so
 - Possibly a better list sorting mechanism (ie, listed games in a series should be by date)
 - Add roll over for descriptions of developers and genres
 - Allow users to click developers, series, genres, platforms and year to see a full list of games with the same field
-- Allow search bar to find games based on partial strings that match rather than exact strings, case insensitivity, and dash/hyphen inclusion/exclusion
 
 ## Versions
+**Ver 0.7 (7-9-2023)**
+- Changed user object stored in local storage to Redux
+    - Adjusted all code that deals with the user accordingly
+- Allowed for partial string searches (other than year since year is a Num) and case sensitivity 
+- Fixed the login token issue where any logins after the initial one caused fetches to API to be unauthorized
+- Fixed the empty list appearing on login rather than the full list of games
+
 **Ver 0.6 (7-9-2023)**
 - Changed favorited games function to work to see if the game is already favorited or not
 - Changed the functionality of favoriting games so that the button to add or delete favorite games depends if it is already on the list
