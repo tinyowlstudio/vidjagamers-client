@@ -5,8 +5,8 @@ import { LoginView } from "../login-view/login-view";
 import { SignupView } from "../signup-view/signup-view";
 import { NavigationBar } from "../navigation-bar/navigation-bar";
 import { ProfileView } from "../profile-view/profile-view";
-import { useSelector, useDispatch } from "react-redux";
-import { store, persistor } from "../../redux/store";
+import { useSelector, useDispatch } from "react-redux"; 
+//import { store, persistor } from "../../redux/store";
 import { setUser } from "../../redux/reducers/user";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -16,25 +16,22 @@ import { ProfileView } from "../profile-view/profile-view";
 // Export this component to other files, which determines the look of the component
 export const MainView = () => {
   const [games, setGames] = useState([]);
+  const dispatch = useDispatch();
+  const storedUser = JSON.parse(localStorage.getItem("user"));
+  const storedToken = localStorage.getItem("token");
   const userObj = useSelector((state) => state.user);
 
-  const dispatch = useDispatch();
   const [selectedCategory, setSelectedCategory] = useState("title");
   const [searchText, setSearchText] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [errorMsg, setErrorMsg] = useState("");
 
   useEffect(() => {
-    persistor.subscribe(() => {
-      // Check if the state has been rehydrated
-      if (persistor.getState().bootstrapped) {
-        const rehydratedUserObj = useSelector((state) => state.user);
-        console.log("Rehydrated:", rehydratedUserObj);
-        dispatch(setUser(rehydratedUserObj));
-      }
-    });
+    if (storedUser && storedToken) {
+      dispatch(setUser({ user: storedUser, token: storedToken }));
+    }
   }, []);
-  
+
   useEffect(() => {
     if (!userObj.token) {
       //if theres no token, dont execute the rest
@@ -97,9 +94,13 @@ export const MainView = () => {
           return game.platform.some((platform) =>
             platform.toLowerCase().includes(searchTextLower)
           );
-        } else if (category === "series") { //series might sometimes be null
-          return game.series && game.series.toLowerCase().includes(searchTextLower);
-        } else { //its just title left now
+        } else if (category === "series") {
+          //series might sometimes be null
+          return (
+            game.series && game.series.toLowerCase().includes(searchTextLower)
+          );
+        } else {
+          //its just title left now
           const fieldLowerCase = game[category].toLowerCase();
           return fieldLowerCase.includes(searchTextLower);
         }
@@ -142,7 +143,7 @@ export const MainView = () => {
                   <Navigate to="/" />
                 ) : (
                   <Col md={5}>
-                    <LoginView/>
+                    <LoginView />
                   </Col>
                 )}
               </>
@@ -158,9 +159,7 @@ export const MainView = () => {
                   <Col>The list is empty!</Col>
                 ) : (
                   <Col md={12}>
-                    <GameView
-                      games={games}
-                    />
+                    <GameView games={games} />
                   </Col>
                 )}
               </>
@@ -180,9 +179,7 @@ export const MainView = () => {
                   <>
                     {searchResults.map((game) => (
                       <Col className="mb-4" key={game._id} sm={6} md={4} lg={3}>
-                        <GameCard
-                          game={game}
-                        />
+                        <GameCard game={game} />
                       </Col>
                     ))}
                   </>
@@ -197,9 +194,7 @@ export const MainView = () => {
                         lg={4}
                         xl={3}
                       >
-                        <GameCard
-                          game={game}
-                        />
+                        <GameCard game={game} />
                       </Col>
                     ))}
                   </>
@@ -218,9 +213,7 @@ export const MainView = () => {
                 ) : (
                   <>
                     <Col md={12}>
-                      <ProfileView
-                        games={games}
-                      />
+                      <ProfileView games={games} />
                     </Col>
                   </>
                 )}

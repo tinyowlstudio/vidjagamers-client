@@ -90,9 +90,8 @@ export const NavigationBar = ({
                 <Nav.Link as={Link} to="/profile">
                   Profile
                 </Nav.Link>
-                <Nav.Link //logs you out by resetting setUser and setToken to the useState null, also clears local storage for stored items
-                  //onClick={onLoggedOut}
-                  onClick={() => dispatch(setUser({ user: null, token: null }))}
+                <Nav.Link
+                  onClick={() => {dispatch(setUser({ user: null, token: null })); localStorage.clear(); }}
                 >
                   Logout
                 </Nav.Link>

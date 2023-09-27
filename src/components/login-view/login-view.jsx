@@ -30,6 +30,8 @@ export const LoginView = ({ }) => {
       .then((data) => {
         if (data.user) {
           dispatch(setUser({ user: data.user, token: data.token }));
+          localStorage.setItem("user", JSON.stringify(data.user));
+          localStorage.setItem("token", data.token);
         } else {
           alert("Incorrect username and/or password, or user doesn't exist");
         }

@@ -5,7 +5,6 @@ User and game info are stored on an API, and the app itself accesses said API so
 
 ## Current bugs/issues
 - Handle CORS issue in which specified URLs are causing issues (to allow the removal of using all origins)
-- Due to change to Redux for the user object, redux-persist is used. Still unable to figure out how place the rehydrated state into the user object to allow for a redirect to the home page
 
 ## Possible Future Updates
 - Increase game library to be more substantial OR use another Game API that already has a library of games
@@ -18,6 +17,9 @@ User and game info are stored on an API, and the app itself accesses said API so
 - Allow users to click developers, series, genres, platforms and year to see a full list of games with the same field
 
 ## Versions
+**Ver 0.8 (7-26-2023)**
+- Updated to adapt local storage to work with Redux states, local storage data will dispatch to the Redux state if it exists
+
 **Ver 0.7 (7-16-2023)**
 - Changed user object stored in local storage to Redux
     - Adjusted all code that deals with the user accordingly
