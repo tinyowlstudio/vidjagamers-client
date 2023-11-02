@@ -3,7 +3,8 @@ This is an app that will allow users to view video games. They can register, log
 
 User and game info are stored on an API, and the app itself accesses said API so long as a JWT token is correct. Passwords are also encrypted on the API. The two databases were made specifically for this app.
 
-**To view the live app go to this link: https://vidjagamers.netlify.app/**
+**To view the API, go to this repository: https://github.com/Alioran/game_api**
+**To view the live app, go to this link: https://vidjagamers.netlify.app/**
 
 ## Current bugs/issues
 - Handle CORS issue in which specified URLs are causing issues (to allow the removal of using all origins)
