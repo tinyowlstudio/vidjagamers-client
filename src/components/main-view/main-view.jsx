@@ -37,7 +37,7 @@ export const MainView = () => {
       //if theres no token, dont execute the rest
       return;
     }
-    fetch("https://vidjagamers-779c791eee4b.herokuapp.com/games", {
+    fetch("http://204.236.187.144:8080/games", {
       headers: { Authorization: `Bearer ${userObj.token}` },
     })
       .then((response) => response.json())

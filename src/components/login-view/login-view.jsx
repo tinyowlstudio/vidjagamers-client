@@ -19,7 +19,7 @@ export const LoginView = ({ }) => {
       password: password,
     };
 
-    fetch("https://vidjagamers-779c791eee4b.herokuapp.com/login", {
+    fetch("http://204.236.187.144:8080/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -51,7 +51,7 @@ export const GameView = ({ games }) => {
     }
 
     fetch(
-      `https://vidjagamers-779c791eee4b.herokuapp.com/users/${userInfo.user.username}/games/${gameID}`,
+      `http://204.236.187.144:8080/users/${userInfo.user.username}/games/${gameID}`,
       {
         method: "POST",
         headers: {
@@ -84,7 +84,7 @@ export const GameView = ({ games }) => {
     }
 
     fetch(
-      `https://vidjagamers-779c791eee4b.herokuapp.com/users/${userInfo.user.username}/games/${gameID}`,
+      `http://204.236.187.144:8080/users/${userInfo.user.username}/games/${gameID}`,
       {
         method: "DELETE",
         headers: {

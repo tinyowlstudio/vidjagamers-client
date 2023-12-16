@@ -25,7 +25,7 @@ export const ProfileView = ({ games }) => {
   //   //instead of comparing usernames, can't you go straight to the username URL?
   //   //you cant access /users with just the token, you can only access your username
   //   fetch(
-  //     `https://vidjagamers-779c791eee4b.herokuapp.com/users/${userInfo.user.username}`,
+  //     `http://204.236.187.144:8080/users/${userInfo.user.username}`,
   //     {
   //       headers: { Authorization: `Bearer ${userInfo.token}` },
   //     }
@@ -75,7 +75,7 @@ export const ProfileView = ({ games }) => {
     }
 
     fetch(
-      `https://vidjagamers-779c791eee4b.herokuapp.com/users/${userInfo.user.username}`,
+      `http://204.236.187.144:8080/users/${userInfo.user.username}`,
       {
         method: "PUT",
         headers: {
@@ -118,7 +118,7 @@ export const ProfileView = ({ games }) => {
 
   const handleDelete = (event) => {
     fetch(
-      `https://vidjagamers-779c791eee4b.herokuapp.com/users/${userInfo.user.username}`,
+      `http://204.236.187.144:8080/users/${userInfo.user.username}`,
       {
         method: "DELETE",
         headers: {
