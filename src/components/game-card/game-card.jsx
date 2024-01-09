@@ -30,7 +30,7 @@ export const GameCard = ({ game }) => {
     }
 
     fetch(
-      `http://204.236.187.144:8080/users/${userInfo.user.username}/games/${gameID}`,
+      `http://ALB-CCex-1735832636.us-west-1.elb.amazonaws.com/users/${userInfo.user.username}/games/${gameID}`,
       {
         method: "POST",
         headers: {
@@ -63,7 +63,7 @@ export const GameCard = ({ game }) => {
     }
 
     fetch(
-      `http://204.236.187.144:8080/users/${userInfo.user.username}/games/${gameID}`,
+      `http://ALB-CCex-1735832636.us-west-1.elb.amazonaws.com/users/${userInfo.user.username}/games/${gameID}`,
       {
         method: "DELETE",
         headers: {

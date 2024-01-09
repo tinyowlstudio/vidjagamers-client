@@ -37,7 +37,7 @@ export const MainView = () => {
       //if theres no token, dont execute the rest
       return;
     }
-    fetch("http://204.236.187.144:8080/games", {
+    fetch("http://ALB-CCex-1735832636.us-west-1.elb.amazonaws.com/games", {
       headers: { Authorization: `Bearer ${userObj.token}` },
     })
       .then((response) => response.json())

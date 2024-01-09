@@ -25,7 +25,7 @@ export const ProfileView = ({ games }) => {
   //   //instead of comparing usernames, can't you go straight to the username URL?
   //   //you cant access /users with just the token, you can only access your username
   //   fetch(
-  //     `http://204.236.187.144:8080/users/${userInfo.user.username}`,
+  //     `http://ALB-CCex-1735832636.us-west-1.elb.amazonaws.com/users/${userInfo.user.username}`,
   //     {
   //       headers: { Authorization: `Bearer ${userInfo.token}` },
   //     }
@@ -75,7 +75,7 @@ export const ProfileView = ({ games }) => {
     }
 
     fetch(
-      `http://204.236.187.144:8080/users/${userInfo.user.username}`,
+      `http://ALB-CCex-1735832636.us-west-1.elb.amazonaws.com/users/${userInfo.user.username}`,
       {
         method: "PUT",
         headers: {
@@ -118,7 +118,7 @@ export const ProfileView = ({ games }) => {
 
   const handleDelete = (event) => {
     fetch(
-      `http://204.236.187.144:8080/users/${userInfo.user.username}`,
+      `http://ALB-CCex-1735832636.us-west-1.elb.amazonaws.com/users/${userInfo.user.username}`,
       {
         method: "DELETE",
         headers: {

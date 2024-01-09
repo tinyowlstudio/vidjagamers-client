@@ -19,7 +19,7 @@ export const LoginView = ({ }) => {
       password: password,
     };
 
-    fetch("http://204.236.187.144:8080/login", {
+    fetch("http://ALB-CCex-1735832636.us-west-1.elb.amazonaws.com/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
