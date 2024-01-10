@@ -58,6 +58,13 @@ export const GalleryView = () => {
     window.open(`http://ALB-CCex-1735832636.us-west-1.elb.amazonaws.com/download/${fileName.Key.replace('resized-images/', '')}`); 
   };
 
+
+  const handleFullView = (fileName) => {
+    window.open(`http://ALB-CCex-1735832636.us-west-1.elb.amazonaws.com/images/${fileName.Key.replace('resized-images/', '')}`);
+  };
+  
+
+
   return (
     <div>
       <h1>Image Gallery</h1>
@@ -82,6 +89,7 @@ export const GalleryView = () => {
           <Card.Img variant="top" src={`data:image/png;base64,${image.Data}`} />
           </div>
         <Card.Body>
+        <Button onClick={() => handleFullView(image)}>Full View</Button>
           <Button onClick={() => handleDownload(image)}>Download</Button>
         </Card.Body>
       </Card>
