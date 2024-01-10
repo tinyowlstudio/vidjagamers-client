@@ -12,6 +12,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { ProfileView } from "../profile-view/profile-view";
+import { GalleryView } from "../gallery-view/gallery-view";
 
 // Export this component to other files, which determines the look of the component
 export const MainView = () => {
@@ -220,6 +221,8 @@ export const MainView = () => {
               </>
             }
           />
+          {/* No need to login, this endpoint and code is just stuck on*/}
+          <Route path="/gallery" element={<GalleryView />} />
         </Routes>
       </Row>
     </BrowserRouter>

@@ -189,6 +189,10 @@ a.card {
 .favorite-games-list.row{
   margin-top: 50px;
 }
+.gallery-image{
+  height: 300px;
+  overflow: hidden;
+}
 
 @media (width <= 992px) {
   .game-container {
