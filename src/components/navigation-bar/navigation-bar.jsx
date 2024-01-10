@@ -81,6 +81,9 @@ export const NavigationBar = ({
                 <Nav.Link as={Link} to="/signup">
                   Signup
                 </Nav.Link>
+                <Nav.Link as={Link} to="/gallery">
+                  Gallery
+                </Nav.Link>
               </Nav>
             </>
           )}
@@ -89,6 +92,9 @@ export const NavigationBar = ({
               <Nav className="me-auto">
                 <Nav.Link as={Link} to="/profile">
                   Profile
+                </Nav.Link>
+                <Nav.Link as={Link} to="/gallery">
+                  Gallery
                 </Nav.Link>
                 <Nav.Link
                   onClick={() => {dispatch(setUser({ user: null, token: null })); localStorage.clear(); }}
